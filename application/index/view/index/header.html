@@ -10,11 +10,13 @@
 
      Bootstrap
     <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
+    <link rel="stylesheet" href="__CSS__/common.css">
     <style type="text/css">
         html, body {width:100%;height:100%;}
         .bg{background-image: url(http://www.pics.com/static/img/userbg03.jpeg);height:240px;margin-top: 1px}
-        .bgWhite{background-color: rgb(246,255,244);}
+        .bgWhite{background-color: #FFFFFF;}
         .main{padding-top: 30px}
+        .bgColor{background-color:	#F0F0F0 }
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -24,36 +26,44 @@
 
 </head>
 <body class="bgColor">
-<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#">LovePicture</a>
-        </div>
-        <div>
-            <ul class="nav navbar-nav">
-                <li><a href="#">发现</a></li>
-                <li><a href="#">我的关注</a></li>
-                <li> <div class="input-group" style="width:250px;padding-top: 5px">
-                    <input type="text" class="form-control" placeholder="search" >
-                    <span class="input-group-btn">
+<div role="banner" >
+    <header class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">LovePicture</a>
+            </div>
+            <div>
+                <ul class="nav navbar-nav">
+                    <li><a href="#">发现</a></li>
+                    <li><a href="#">我的关注</a></li>
+                    <li> <div class="input-group" style="width:250px;padding-top: 10px">
+                        <input type="text" class="form-control" placeholder="search" >
+                        <span class="input-group-btn">
                     <button class="btn btn-default" type="button">
                         <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </button>
                 </span>
-                </div></li>
-            </ul>
+                    </div></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="navLog" style="display: none"><a href="#">登录/注册</a></li>
+                    <li id="navPhoto" style="display: none;"><a href="#" style="padding-top: 10px;padding-bottom: 10px"><img src="__img__/userDefault.jpg" class="navPhoto"></a></li>
+                </ul>
+            </div>
 
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">登录/注册</a></li>
-            </ul>
         </div>
-
-    </div>
+    </header>
 </div>
+
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins)-->
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed-->
 <script src="__JS__/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#navPhoto").show();
+    })
+</script>
 </body>
 </html>

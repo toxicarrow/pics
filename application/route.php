@@ -17,4 +17,5 @@ return [
     'login'=>'user/Login/login',
     'index'=>'index/index/index',
     'user'=>'user/user_info/userInfo',
+    'article'=>'article/Article/article',
 ];

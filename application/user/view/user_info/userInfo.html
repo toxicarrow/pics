@@ -1,11 +1,11 @@
 {include file="index@index/header"/}
 <div class="container main">
-    <div style="margin-top: 10px;box-shadow: 10px 10px 5px #888888;margin-bottom: 10px;">
+    <div class="profileHeader">
         <div class="bg">
 
         </div>
-        <div class="bgWhite" style="padding-left: 20px;height:130px;">
-            <p><img src="__img__/userDefault.jpg" style="position:relative;top:-100px;width: 200px;height: 200px"></p>
+        <div class="profileHeader-wrapper" style="padding-left: 20px;height:130px;">
+            <p><img src="__img__/userDefault.jpg"class="profileHeader-photo"></p>
         </div>
     </div>
 
@@ -23,7 +23,7 @@
 
         <!--<div class="col-md-offset-1 col-md-9 col-lg-offset-1 col-lg-9 col-xs-12">-->
 
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-default"style="margin-bottom: 0px;">
         <div class="container">
             <div class="row">
                 <div class="col-md-offset-1"  role="navigation" id="filter-navbar-collapse" aria-expanded="false">
@@ -32,7 +32,7 @@
                         <li><a href="#">收藏</a></li>
                         <li><a href="#">评论</a></li>
                         <li><a href="#">作品</a></li>
-                        <li><a href="#">关注</a></li>
+                        <li><a href="#">关注了</a></li>
                         <li><a href="#">关注者</a></li>
                     </ul>
                 </div>
@@ -40,9 +40,126 @@
 
         </div>
 </div>
+    <div class="container">
+
+        <div class="row">
+            <div  id="content"class="profileMain col-md-9" style="padding: 20px">
+                    <section class="article">
+                        <header>
+                            <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
+                            <div style="padding-top: 10px"><b class="articleName"> 作者昵称</b></div>
+                        </header>
+                        <div class="clear"></div>
+                        <main>
+                            <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
+                            <a href="" class="avatar"><img  src="__img__/userbg02.jpg" ></a>
+                        </main>
+                        <footer>
+                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+                                </button>
+                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
+                                </button>
+                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+                                </button>
+                        </footer>
+                    </section>
+                    <section class="article">
+                        <header>
+                            <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
+                            <div style="padding-top: 20px;"><b class="articleName"> 作者昵称</b></div>
+                        </header>
+                        <div class="clear"></div>
+                        <main>
+                            <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
+                            <a href="" class="avatar"><img  src="__img__/testpic02.jpg" ></a>
+                        </main>
+                        <footer>
+                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+                            </button>
+                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
+                            </button>
+                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+                            </button>
+                        </footer>
+                    </section>
+                <section class="article">
+                    <header>
+                        <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
+                        <div style="padding-top: 20px;"><b class="articleName"> 作者昵称</b></div>
+                    </header>
+                    <div class="clear"></div>
+                    <main>
+                        <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
+                        <a href="" class="avatar"><img  src="__img__/testpic03.jpg" ></a>
+                    </main>
+                    <footer>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+                        </button>
+                    </footer>
+                </section>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
 
 
 </div>
+<script>
+    $(function(){
+        $.get("/article",function(data,status){
+            $("#content").append(data);
+        });
+    });
+    $(document).ready(function () {
+        $('ul.nav > li').click(function (e) {
+            e.preventDefault();
+            $('ul.nav > li').removeClass('active');
+            $(this).addClass('active');
+            var text = $(this).text();
+            console.log(text);
+            switch (text){
+                case "点赞":$("#content").hide(1000);setTimeout(changeToLike,1000);$("#content").show(1000);break;
+                case "收藏":$("#content").hide(1000);setTimeout(changeToStar,1000);$("#content").show(1000);break;
+                case "评论":$("#content").hide(1000);setTimeout(changeToComment,1000);$("#content").show(1000);break;
+                case "作品":$("#content").hide(1000);setTimeout(changeToWork,1000);$("#content").show(1000);break;
+                case "关注了":$("#content").hide(1000);setTimeout(changeToFollowing,1000);$("#content").show(1000);break;
+                case "关注者":$("#content").hide(1000);setTimeout(changeToFollowers,1000);$("#content").show(1000);break;
+            }
+        });
 
-<script src="__JS__/EasyBanner.js"></script>
-<script src="__JS__/common.js"></script>
+    });
+    function changeToLike(){
+        $("#content").html("<b>点赞页面</b>");
+    }
+    function changeToStar(){
+        $("#content").html("<b>点赞页面</b>");
+    }
+    function changeToComment(){
+        $("#content").html("<b>点赞页面</b>");
+    }
+    function changeToWork(){
+        $("#content").html("<b>点赞页面</b>");
+    }
+    function changeToFollowing(){
+        $("#content").html("<b>关注了页面</b>");
+    }
+    function changeToFollowers(){
+        $("#content").html("<b>关注者页面</b>");
+    }
+</script>

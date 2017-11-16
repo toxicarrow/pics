@@ -1,0 +1,22 @@
+<section class="article">
+    <header>
+        <a href="#"><img src="{$userPhotoRoute}" class="articleHead"></a>
+        <div style="padding-top: 10px;"><b class="articleName">{$name}</b></div>
+    </header>
+    <div class="clear"></div>
+    <main>
+        <p class="picDescription" style="margin-left: 20px">{$description}</p>
+        <a href="" class="avatar"><img  src="{$imgRoute}" ></a>
+    </main>
+    <footer>
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+        </button>
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>{$commentNum}
+        </button>
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
+            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+        </button>
+    </footer>
+</section>
