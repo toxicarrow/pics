@@ -5,18 +5,24 @@
     </header>
     <div class="clear"></div>
     <main>
-        <p class="picDescription" style="margin-left: 20px">{$description}</p>
-        <a href="" class="avatar"><img  src="{$imgRoute}" ></a>
+        <a href="" class="avatar" style="margin: 0px;position: relative">
+            <img src="{$imgRoute}">
+            <div class="descriptionBox">
+                <h2 style="padding-left: 50px">#自然 &nbsp;&nbsp; #单图</h2>
+                <p class="picDescription">{$description}</p>
+            </div>
+        </a>
+
     </main>
     <footer>
-        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;" aria-label="Left Align">
+            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;star
         </button>
-        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>{$commentNum}
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;" aria-label="Left Align">
+            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;{$commentNum}
         </button>
-        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;" aria-label="Left Align">
+            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;like
         </button>
     </footer>
 </section>

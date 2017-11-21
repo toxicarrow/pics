@@ -26,3 +26,147 @@
 
     </div>
 </div>
+<div id="nothing"></div>
+<div class="container">
+    <div id="myGallery" >
+        <a href="__img__/01.jpg">
+            <img alt="Title 1" src="__img__/01.jpg"/>
+            <div class="caption">
+                <h4>Title 1</h4>
+                <span>ok</span>
+            </div>
+        </a>
+        <a href="__img__/02.jpg">
+            <img alt="Title 2" src="__img__/02.jpg"/>
+        </a>
+        <a href="__img__/03.jpg">
+            <img alt="Title 3" src="__img__/03.jpg"/>
+        </a>
+        <a href="__img__/04.jpg">
+            <img alt="Title 4" src="__img__/04.jpg"/>
+        </a>
+        <a href="__img__/05.jpg">
+            <img alt="Title 5" src="__img__/05.jpg"/>
+        </a>
+        <a href="__img__/06.jpg">
+            <img alt="Title 6" src="__img__/06.jpg"/>
+        </a>
+        <a href="__img__/07.jpg">
+            <img alt="Title 7" src="__img__/07.jpg"/>
+        </a>
+        <a href="__img__/08.jpg">
+            <img alt="Title 8" src="__img__/08.jpg"/>
+        </a>
+        <a href="__img__/10.jpg">
+            <img alt="Title 10" src="__img__/10.jpg"/>
+        </a>
+        <a href="__img__/11.jpg">
+            <img alt="Title 11" src="__img__/11.jpg"/>
+        </a>
+        <a href="__img__/12.jpg">
+            <img alt="Title 12" src="__img__/12.jpg"/>
+        </a>
+        <a href="__img__/13.jpg">
+            <img alt="Title 13" src="__img__/13.jpg"/>
+        </a>
+        <a href="__img__/14.jpg">
+            <img alt="Title 14" src="__img__/14.jpg"/>
+        </a>
+        <a href="__img__/15.jpg">
+            <img alt="Title 15" src="__img__/15.jpg"/>
+        </a>
+        <!-- other images... -->
+    </div>
+</div>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script>
+    $("#myGallery").justifiedGallery({
+        rowHeight : 200,
+        lastRow : 'nojustify',
+        margins : 3
+    });
+
+//    $('.grid').masonry({
+//        itemSelector: '.grid-item',
+//
+//    });
+//    $.ajax({
+//
+//        type: "GET",
+//
+//        url: "/picInfo/01",
+//
+//        success: function(data) {
+//            var temp = this.url;
+//            var n = temp.lastIndexOf('/');
+//            console.log(temp.substring(n+1));
+//        }
+//        });
+//    $(function(){
+//        imgArr = ['01','02','03','04','05','06','07','08','13','10','11','12','13','14','15','16','17'];
+//        for(var i in imgArr) {
+//            console.log(i);
+//            //TODO
+//            $.ajax({
+//
+//                type: "GET",
+//
+//                url: "/picInfo/"+imgArr[i],
+//
+//                success: function(data) {
+//                    var url = this.url;
+//                    var n = url.lastIndexOf('/');
+//                    var temp = url.substring(n+1);
+//                    console.log(temp);
+//                    if (data >= 1.2 && data <= 1.6) {
+//                    $('.grid').append("<div class=\"grid-item \"><img style='width:100%;height: 90%' src='__img__/"+temp+".jpg'></div>");
+//                }
+//                else if (data < 0.7) {
+//                    $('.grid').append("<div class=\"grid-item grid-item--height3\"><img style='width:100%;height: 90%' src='__img__/"+temp+".jpg'></div>");
+//                }
+//                else if (data > 1.6) {
+//                    $('.grid').append("<div class=\"grid-item grid-item--width2 grid-item--height2\"><img style='width:100%;height: 90%' src='__img__/"+temp+".jpg'></div>");
+//                }
+//                else{
+//                        $('.grid').append("<div class=\"grid-item grid-item--height2\"><img style='width:100%;height: 90%' src='__img__/"+temp+".jpg'></div>");
+//                    }
+//                }
+//            });
+////            $.get("/picInfo/" + imgArr[i], function (data, status) {
+////                var temp = imgArr[i];
+////                if (data >= 0.7 && data <= 1.6) {
+////                    $('.grid').append("<div class=\"grid-item\"><img style='width:100%' src='__img__/"+temp+".jpg'></div>");
+////                }
+////                else if (data < 0.7) {
+////                    $('.grid').append("<div class=\"grid-item grid-item--height2\"><img style='width:100%' src='__img__/"+temp+".jpg'></div>");
+////                }
+////                else if (data > 1.6) {
+////                    $('.grid').append("<div class=\"grid-item grid-item--width2\"><img style='width:100%' src='__img__/"+temp+".jpg'></div>");
+////                }
+////            });
+//        }
+//        });
+            /**var path = imgArr[i];
+            var imgTemp = new Image();
+            imgTemp.src=path;
+                console.log(width+" width  "+path);
+                console.log(percent+" "+path);
+                if (percent > 0.8 && percent < 1.2) {
+                    $('.grid').append("<div class=\"grid-item grid-item--width2 grid-item--height3\"</div>");
+                }
+                else if(percent<0.8){
+                    $('.grid').append("<div class=\"grid-item grid-item--height2\"</div>");
+                }
+                else if(percent > 1.2 && percent < 1.6){
+                    $('.grid').append("<div class=\"grid-item\"</div>");
+                }
+                else{
+                    $('.grid').append("<div class=\"grid-item grid-item--width2 grid-item--height2\"</div>");
+                }
+            }
+
+        $("#nothing").empty();
+
+    });**/
+
+</script>

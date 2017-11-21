@@ -12,8 +12,9 @@
 return [
     'type'           => 'sqlite',
     'database'       => 'db/datasource/data', // 相对于入口文件的数据库文件路径
-    'prefix'         => 'prefix_',
-    'debug'          => true
+    'prefix'         => '',
+    'debug'          => true,
+    'auto_timestamp' => false,
 //    // 数据库类型
 //    'type'            => 'mysql',
 //    // 服务器地址

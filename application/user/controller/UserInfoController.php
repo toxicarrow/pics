@@ -1,9 +1,10 @@
 <?php
 namespace app\user\controller;
 use think\Controller;
-class UserInfo extends Controller{
+class UserInfoController extends Controller{
     //进入用户界面
     public function userInfo(){
+        trace("用户界面");
         return $this->fetch();
 }
 }

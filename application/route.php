@@ -13,9 +13,11 @@ return [
     '__pattern__' => [
         'name' => '\w+',
     ],
-    'hello/[:name]'=>'login/hello',
+    'hello/[:name]'=>'index/Index/hello',
     'login'=>'user/Login/login',
     'index'=>'index/index/index',
     'user'=>'user/user_info/userInfo',
     'article'=>'article/Article/article',
+    'picInfo/:name'=>'index/Index/getPicInfo',
+    'uploadPicture'=>'user/Upload/picture',
 ];

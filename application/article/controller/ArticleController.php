@@ -10,7 +10,7 @@ namespace app\article\controller;
 use think\Controller;
 
 
-class Article extends Controller
+class ArticleController extends Controller
 {
     public function article()
     {

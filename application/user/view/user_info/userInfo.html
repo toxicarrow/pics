@@ -22,7 +22,7 @@
     </div>-->
 
         <!--<div class="col-md-offset-1 col-md-9 col-lg-offset-1 col-lg-9 col-xs-12">-->
-
+<!--
     <div class="navbar navbar-default"style="margin-bottom: 0px;">
         <div class="container">
             <div class="row">
@@ -39,55 +39,95 @@
             </div>
 
         </div>
-</div>
+</div>-->
     <div class="container">
 
         <div class="row">
-            <div  id="content"class="profileMain col-md-9" style="padding: 20px">
-                    <section class="article">
-                        <header>
-                            <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
-                            <div style="padding-top: 10px"><b class="articleName"> 作者昵称</b></div>
-                        </header>
-                        <div class="clear"></div>
-                        <main>
-                            <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
-                            <a href="" class="avatar"><img  src="__img__/userbg02.jpg" ></a>
-                        </main>
-                        <footer>
-                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
-                                </button>
-                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
-                                </button>
-                                <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                    <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
-                                </button>
-                        </footer>
-                    </section>
-                    <section class="article">
-                        <header>
-                            <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
-                            <div style="padding-top: 20px;"><b class="articleName"> 作者昵称</b></div>
-                        </header>
-                        <div class="clear"></div>
-                        <main>
-                            <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
-                            <a href="" class="avatar"><img  src="__img__/testpic02.jpg" ></a>
-                        </main>
-                        <footer>
-                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
-                            </button>
-                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
-                            </button>
-                            <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
-                            </button>
-                        </footer>
-                    </section>
+            <div id="content" class="profileMain col-md-9" style="padding: 20px;padding-top: 20px">
+                <!-- <div class="navbar navbar-default "
+                      style="position:absolute;margin-bottom: 0px;top: 0;left: 0;width: 100%">
+                     <div class="container">
+                         <div role="navigation" id="filter-navbar-collapse" aria-expanded="false">
+                             <ul class="nav navbar-nav">
+                                 <li><a href="#">点赞</a></li>
+                                 <li><a href="#">收藏</a></li>
+                                 <li><a href="#">评论</a></li>
+                                 <li><a href="#">作品</a></li>
+                                 <li><a href="#">关注了</a></li>
+                                 <li><a href="#">关注者</a></li>
+                             </ul>
+                         </div>
+
+                     </div>
+                 </div>-->
+                <div style="width: 100%;border: 0;border-bottom:solid;border-width: 1px;border-color: #DCDCDC;padding-bottom: 10px">
+                    <div class="row">
+                        <div class="col-md-3"><h2 style="margin-left: 20px;color: #2b669a;">我的作品</h2></div>
+                        <div class="col-md-9"> <button  data-toggle="modal" data-target="#pictureDetail" data-trigger="hover" data-toggle="popover" data-content="发表新作品" data-placement="right" type="button" id="addArticle" class="btn btn-default btn-circle btn-lg"  style="float: left;margin-top: 15px;"><i class="glyphicon glyphicon-plus"></i></button></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+                <section class="article">
+                    <header>
+                        <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
+                        <div style="padding-top: 10px"><b class="articleName"> 作者昵称</b></div>
+                    </header>
+                    <div class="clear"></div>
+                    <main>
+                        <a href="" class="avatar" style="margin: 0px;position: relative"><img
+                                src="__img__/userbg02.jpg">
+                            <div class="descriptionBox">
+                                <h2 style="padding-left: 50px">#自然 &nbsp;&nbsp; #单图</h2>
+                                <p class="picDescription">我觉得这张很ok，完全可以取代我制作人的地位</p>
+                            </div>
+                        </a>
+
+                    </main>
+                    <footer>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;star
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>15
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>21
+                        </button>
+                    </footer>
+                </section>
+                <section class="article">
+                    <header>
+                        <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
+                        <div style="padding-top: 20px;"><b class="articleName"> 作者昵称</b></div>
+                    </header>
+                    <div class="clear"></div>
+                    <main>
+                        <a href="" style="position: relative;" class="avatar"><img src="__img__/testpic02.jpg">
+                            <div class="descriptionBox">
+                                <h2 style="padding-left: 50px">#生态 &nbsp;&nbsp; #单图</h2>
+                                <p class="picDescription">我觉得这张很ok，完全可以取代我制作人的地位</p>
+                            </div>
+                        </a>
+                    </main>
+                    <footer>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;star
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>21
+                        </button>
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>36
+                        </button>
+                    </footer>
+                </section>
                 <section class="article">
                     <header>
                         <a href="#"><img src="__img__/userDefault.jpg" class="articleHead"></a>
@@ -96,70 +136,311 @@
                     <div class="clear"></div>
                     <main>
                         <p class="picDescription" style="margin-left: 20px">我觉得ok</p>
-                        <a href="" class="avatar"><img  src="__img__/testpic03.jpg" ></a>
+                        <a href="" class="avatar"><img src="__img__/testpic03.jpg"></a>
                     </main>
                     <footer>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>star
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;star
                         </button>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>10
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;10
                         </button>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px" aria-label="Left Align">
-                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>like
+                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                                aria-label="Left Align">
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>&nbsp;25
                         </button>
                     </footer>
                 </section>
-                </div>
+            </div>
 
+            <div class="col-md-3 profileMenu">
 
             </div>
         </div>
     </div>
 
-
-
 </div>
+
+<div class="modal fade" id="pictureDetail" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content" style="min-height:600px;height:auto!important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">分享新的作品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">标题</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 200px;" id="title" placeholder="请输入标题(不超过10字）">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">简要描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 400px;" id="description" maxlength="30" placeholder="请输入简要描述（不超过30字）">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="tag" class="col-sm-2 control-label">摄影标签</label>
+                        <div class="col-sm-10 dropdown" id="tag">
+                            <button type="button" class="btn dropdown-toggle" style="float: left" id="tagMenu" data-toggle="dropdown">添加标签
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="tagMenu">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">人物</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">生态</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">风景</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem"  tabindex="-1" href="#">纪实</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">商业</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">概念</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">艺术</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#">宠物</a>
+                                </li>
+                            </ul>
+                            <div class="clear"></div>
+                        </div>
+                    </div>
+                    <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
+                        <div id="div-file" class="file-loading" style="margin: 0" >
+                            <input id="file" class="file" type="file"  name="image[]" multiple data-preview-file-type="any">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="upload">发布</button>      -
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__JS__/fileinput.min.js"></script>
+<script src="__JS__/zh.js"></script>
+
 <script>
+    $('#pictureDetail').on('hidden.bs.modal', function () {
+        clearModal();
+    });
+
+    $(document).ready(function () {
+        $('#upload').click(function () {
+            console.log('upload');
+            $("#file").fileinput('upload');
+        });
+    });
+    //页面加载完毕，调用初始化上传图片插件的函数
+
+    function clearModal(){
+        console.log("clear");
+        $('#title').val("");
+        $('#description').val("");
+        $("#file").fileinput('clear'); //重置上传控件（清空已文件）
+    }
+    //初始化图片插件
+        $("#file").fileinput({
+            language: 'zh', //设置语言
+            uploadUrl: 'http://www.pics.com/uploadPicture', //上传的地址
+            allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
+            uploadAsync: false, //默认异步上传
+            showUpload: false, //是否显示上传按钮
+            showRemove: true, //显示移除按钮
+            browseOnZoneClick: true,
+            showPreview: true, //是否显示预览
+            showCaption: true,//是否显示标题
+            browseClass: "btn btn-primary", //按钮样式
+            dropZoneEnabled: true,//是否显示拖拽区域
+            layoutTemplates: {
+                // actionDelete:'', //去除上传预览的缩略图中的删除图标
+                actionUpload: '',//去除上传预览缩略图中的上传图片；
+                // actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
+            },
+            //minImageWidth: 50, //图片的最小宽度
+            //minImageHeight: 50,//图片的最小高度
+            //maxImageWidth: 200,//图片的最大宽度
+            //maxImageHeight: 200,//图片的最大高度
+            maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+            minFileCount: 1,
+            maxFileCount: 10, //表示允许同时上传的最大文件个数
+            enctype: 'multipart/form-data',
+            validateInitialCount: true,
+            previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+            msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+            uploadExtraData: function () {   //额外参数的关键点
+                //TODO
+                var obj = {};
+                obj.id = 1;
+                obj.title = $('#title').val();
+                obj.description = $('#description').val();
+                //var tags=$('#tag').find('.active').text();
+                //obj.tags=tags;
+                console.log(obj);
+                return obj;
+            }
+        }).on("filebatchuploadsuccess", function (event, data) {
+            console.log('文件上传成功！');
+           //TODO  关闭页面，给予提示
+//    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
+//        console.log('文件上传失败！');
+        });
+
+    $(function (){
+        $("[data-toggle='popover']").popover();
+    });
     $(function(){
         $.get("/article",function(data,status){
             $("#content").append(data);
         });
     });
-    $(document).ready(function () {
-        $('ul.nav > li').click(function (e) {
+    $(document).ready(function (){
+        $("[role='menuitem']").click(function (e) {
+            //console.log("click");
             e.preventDefault();
-            $('ul.nav > li').removeClass('active');
-            $(this).addClass('active');
+            //设置标签的li是否active，并根据需要在a后面生成/消除label
             var text = $(this).text();
-            console.log(text);
+            var tagId;
             switch (text){
-                case "点赞":$("#content").hide(1000);setTimeout(changeToLike,1000);$("#content").show(1000);break;
-                case "收藏":$("#content").hide(1000);setTimeout(changeToStar,1000);$("#content").show(1000);break;
-                case "评论":$("#content").hide(1000);setTimeout(changeToComment,1000);$("#content").show(1000);break;
-                case "作品":$("#content").hide(1000);setTimeout(changeToWork,1000);$("#content").show(1000);break;
-                case "关注了":$("#content").hide(1000);setTimeout(changeToFollowing,1000);$("#content").show(1000);break;
-                case "关注者":$("#content").hide(1000);setTimeout(changeToFollowers,1000);$("#content").show(1000);break;
+                case '人物':tagId='people';break;
+                case '生态':tagId='wile';break;
+                case '风景':tagId='scene';break;
+                case '纪实':tagId='documentary';break;
+                case '商业':tagId='commerce';break;
+                case '概念':tagId='concept';break;
+                case '艺术':tagId='art';break;
+                case '宠物':tagId='pet';break;
             }
+            //console.log(tagId);
+            if($(this).parent().hasClass('active')){
+                $(this).parent().removeClass('active');
+                var temp = '#'+tagId;
+                $(temp).remove();
+            }
+            else{
+                $(this).parent().addClass('active');
+                $("#tagMenu").after("<span class='label label-info' id='"+tagId+"' style='float: left;margin:5px;font-size: medium '>"+$(this).text()+"</span>");
+
+            }
+
+        });
+    });
+
+    /**$(document).ready(function () {
+        $('div.descriptionBox').hover(
+            function () {
+                console.log("in");
+                $(this).animate({opacity:0.5},300);
+            },function () {
+                console.log("out");
+                $(this).animate({opacity:0},300);
+            });
+    });**/
+    $(document).ready(function () {
+        $("#content").on("mouseenter", "a.avatar", function () {
+            console.log("in");
+            var text = $(this).find("div").text();
+            console.log(text);
+            $(this).find("div").show();
+        });
+        $("#content").on("mouseleave", "a.avatar", function () {
+            console.log("out");
+            $(this).find("div").hide();
+        });
+//        $('a.avatar').hover(
+//            function () {
+//                console.log("in");
+//                var text = $(this).find("div").text();
+//                console.log(text);
+//                $(this).find("div").show(300);
+//            },
+//            function () {
+//                console.log("out");
+//                $(this).find("div").hide(300);
+//            });
+//    });
+
+        $(document).ready(function () {
+            $('ul.nav > li').click(function (e) {
+                e.preventDefault();
+                $('ul.nav > li').removeClass('active');
+                $(this).addClass('active');
+                var text = $(this).text();
+                console.log(text);
+                switch (text) {
+                    case "点赞":
+                        $("#content").hide(1000);
+                        setTimeout(changeToLike, 1000);
+                        $("#content").show(1000);
+                        break;
+                    case "收藏":
+                        $("#content").hide(1000);
+                        setTimeout(changeToStar, 1000);
+                        $("#content").show(1000);
+                        break;
+                    case "评论":
+                        $("#content").hide(1000);
+                        setTimeout(changeToComment, 1000);
+                        $("#content").show(1000);
+                        break;
+                    case "作品":
+                        $("#content").hide(1000);
+                        setTimeout(changeToWork, 1000);
+                        $("#content").show(1000);
+                        break;
+                    case "关注了":
+                        $("#content").hide(1000);
+                        setTimeout(changeToFollowing, 1000);
+                        $("#content").show(1000);
+                        break;
+                    case "关注者":
+                        $("#content").hide(1000);
+                        setTimeout(changeToFollowers, 1000);
+                        $("#content").show(1000);
+                        break;
+                }
+            });
+
         });
 
+        function changeToLike() {
+            $("#content").html("<b>点赞页面</b>");
+        }
+
+        function changeToStar() {
+            $("#content").html("<b>点赞页面</b>");
+        }
+
+        function changeToComment() {
+            $("#content").html("<b>点赞页面</b>");
+        }
+
+        function changeToWork() {
+            $("#content").html("<b>点赞页面</b>");
+        }
+
+        function changeToFollowing() {
+            $("#content").html("<b>关注了页面</b>");
+        }
+
+        function changeToFollowers() {
+            $("#content").html("<b>关注者页面</b>");
+        }
     });
-    function changeToLike(){
-        $("#content").html("<b>点赞页面</b>");
-    }
-    function changeToStar(){
-        $("#content").html("<b>点赞页面</b>");
-    }
-    function changeToComment(){
-        $("#content").html("<b>点赞页面</b>");
-    }
-    function changeToWork(){
-        $("#content").html("<b>点赞页面</b>");
-    }
-    function changeToFollowing(){
-        $("#content").html("<b>关注了页面</b>");
-    }
-    function changeToFollowers(){
-        $("#content").html("<b>关注者页面</b>");
-    }
 </script>
