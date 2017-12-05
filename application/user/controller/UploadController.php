@@ -1,9 +1,13 @@
 <?php
 namespace app\user\controller;
+use app\topic\model\Topic;
 use think\Controller;
+use think\Db;
 use think\Image;
-use app\user\model\Picture as PictureModel;
+use app\work\model\WorkPicture;
+use app\work\model\Work;
 use think\Request;
+use app\common\Util;
 /**
  * Created by PhpStorm.
  * User: 涵
@@ -12,59 +16,101 @@ use think\Request;
  */
 class UploadController extends Controller {
     /**
+     * 上传作品
      * @param Request $request
      * @return mixed
      */
-    public function picture(Request $request)
+    public function uploadWork(Request $request)
     {
         $files = $request->file('image');
+        $id=$request->session("user_id");
+        if($id==null){
+            $msg=array();
+            $msg['msg']="请先登录！";
+            return json($msg);
+        }
 
-//        $info = $files->validate(['size'=>9000000,'ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'upload');
-//        if($info){
-//                //保存路径
-//                $item[] = $info->getRealPath();
-//            }else{
-//                // 上传失败获取错误信息
-////                trace("失败");
-//                $this->error($files);
-//            }
-        $item = [];
-        $thumbItem = [];
-        $id=1;
-        foreach($files as $file){
-            $info = $file->validate(['size'=>9000000,'ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'upload');
-            // 移动到框架应用根目录/public/upload/ 目录
-            if($info){
-                //保存路径
-                $item[] = $info->getRealPath();
-            }else{
-                // 上传失败获取错误信息
-//                trace("失败");
-                $this->error($file);
+//        $pictureIds = [];
+//        $firstPictureId=$pictureIds[0];
+        $topicId=$request->param('topicId');
+//        if($topicId==null){
+//            $topicId=0;
+//        }
+        $title=$request->param('title');
+        $category=$request->param('category');
+        $description=$request->param('description');
+        $date=date("Y-m-d h:i:sa");
+        $work = new Work;
+        $work->authorId=$id;
+        $work->date=$date;
+        $work->description=$description;
+        $work->title=$title;
+        $work->category=$category;
+        $work->topicId=$topicId;
+        if($work->save()){
+            $articleId=$work->id;
+            $title=$work->title;
+            foreach($files as $file){
+                $info = $file->validate(['size'=>9000000,'ext'=>'jpg,png,gif,jpeg'])->move(ROOT_PATH . 'public' . DS . 'upload');
+                // 移动到框架应用根目录/public/upload/ 目录
+                $pictureId = $this->addPicture($file,$info,$id,$articleId,$title);
+//            $pictureIds[]=$pictureId;
             }
 
-            $pictureId = $this->addPicture($file,$info);
+            //topic作品数量增加
+            if($topicId!=null){
+                $workNum = Topic::get($topicId)['workNum'];
+                Db::table('topic')
+                    ->where('id',$topicId)
+                    ->update(['workNum'=>$workNum]);
+            }
 
+            $msg=array();
+            $msg['msg']="保存成功！";
+            return json($msg);
         }
-        $this->success("文件上传成功".implode('<br/>',$item));
+        else{
+            $msg=array();
+            $msg['msg']="出错！";
+            return json($msg);
+        }
+
     }
 
-    public function addPicture($file,$info){
+    /**
+     * @param $file 原图片
+     * @param $info 原图片存储信息
+     * @param $id 作者id
+     * @param $articleId 作品Id
+     * @param $title 作品标题
+     * @return mixed|string
+     * 图片制作等比缩放的高为300的缩略图并保存
+     * 将图片信息保存
+     */
+    public function addPicture($file,$info,$id,$articleId,$title){
         $image = Image::open($file);
         //得到宽,高
         $width = $image->width();
         $height = $image->height();
 
-        $saveName =(date('Ymd')).DS.'thumb_'.$info->getFileName();
+        $thumbPath =(date('Ymd')).DS.'thumb_'.$info->getFileName();
+        $originPath=(date('Ymd')).DS.$info->getFileName();
         //得到缩略图并保存
-        $image->thumb(150,150,Image::THUMB_FIXED);
-        $image->save(ROOT_PATH . 'public'.DS.'upload'.DS. $saveName);
+        $thumbHeight = 300;
+        $thumbWidth = $width*$thumbHeight/$height;
+        $thumbWidth = (int)$thumbWidth;
+        $image->thumb($thumbWidth,$thumbHeight,Image::THUMB_FIXED);
+        $image->save(ROOT_PATH . 'public' .DS.'upload'.DS. $thumbPath);
 
-        $picture = new PictureModel;
+        $picture = new WorkPicture;
         $picture->width = $width;
         $picture->height = $height;
-        $picture->path = $info->getRealPath();
-        $picture->thumbPath = ROOT_PATH . 'public'.DS.'upload'.DS. $saveName;
+        $picture->path = Util::$website.DS.'upload'.DS. $originPath;
+        $picture->thumbPath = Util::$website.DS.'upload'.DS. $thumbPath;
+        $picture->thumbWidth=$thumbWidth;
+        $picture->articleId=$articleId;
+        $picture->title=$title;
+        $picture->authorId=$id;
         if($picture->save()){
             return $picture->id;
         }

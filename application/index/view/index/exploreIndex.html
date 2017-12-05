@@ -1,0 +1,188 @@
+{include file="index/header"/}
+<div class="row" style="margin-top: 3em;">
+    <div class="col-md-9" style="margin-left: 5%;">
+        <section id="exploreMain">
+            <section id="allCategory">
+                <section id="people" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">人物摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="peopleGallery" class="justified-gallery" >
+                            {volist name="peoplePictures" id="peoplePicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$peoplePicture.articleId}" target="_blank" rel="people">
+                                <img src="{$peoplePicture.thumbPath}" alt="{$peoplePicture.title}" height='{$peoplePicture.thumbHeight}' width="{$peoplePicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/人物}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="pet" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">宠物摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="petGallery" class="justified-gallery" >
+                            {volist name="petPictures" id="petPicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$petPicture.articleId}" target="_blank" rel="pet">
+                                <img src="{$petPicture.thumbPath}" alt="{$petPicture.title}" height='{$petPicture.thumbHeight}' width="{$petPicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/宠物}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="scene" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">风景摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="sceneGallery" class="justified-gallery" >
+                            {volist name="scenePictures" id="scenePicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$scenePicture.articleId}" target="_blank" rel="scene">
+                                <img src="{$scenePicture.thumbPath}" alt="{$scenePicture.title}" height='{$scenePicture.thumbHeight}' width="{$scenePicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/风景}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="nature" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">生态摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="natureGallery" class="justified-gallery" >
+                            {volist name="naturePictures" id="naturePicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$naturePicture.articleId}" target="_blank" rel="nature">
+                                <img src="{$naturePicture.thumbPath}" alt="{$naturePicture.title}" height='{$naturePicture.thumbHeight}' width="{$naturePicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/生态}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="art" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">艺术摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="artGallery" class="justified-gallery" >
+                            {volist name="artPictures" id="artPicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$artPicture.articleId}" target="_blank" rel="art">
+                                <img src="{$artPicture.thumbPath}" alt="{$artPicture.title}" height='{$artPicture.thumbHeight}' width="{$artPicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/艺术}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="concept" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">概念摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="conceptGallery" class="justified-gallery" >
+                            {volist name="conceptPictures" id="conceptPicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$conceptPicture.articleId}" target="_blank" rel="concept">
+                                <img src="{$conceptPicture.thumbPath}" alt="{$conceptPicture.title}" height='{$conceptPicture.thumbHeight}' width="{$conceptPicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/概念}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="commercial" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">商业摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="commercialGallery" class="justified-gallery" >
+                            {volist name="commercialPictures" id="commercialPicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$commercialPicture.articleId}" target="_blank" rel="commercial">
+                                <img src="{$commercialPicture.thumbPath}" alt="{$commercialPicture.title}" height='{$commercialPicture.thumbHeight}' width="{$commercialPicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/商业}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+                <section id="record" class="panel panel-info">
+                    <header class="panel-heading">
+                        <h1 class="panel-title" style="font-size: 1.5em">纪实摄影</h1>
+                    </header>
+                    <main class="panel-body">
+                        <div id="recordGallery" class="justified-gallery" >
+                            {volist name="recordPictures" id="recordPicture" }
+                            <a href="http://www.igallery.com/workDetail/id/{$recordPicture.articleId}" target="_blank" rel="record">
+                                <img src="{$recordPicture.thumbPath}" alt="{$recordPicture.title}" height='{$recordPicture.thumbHeight}' width="{$recordPicture.thumbWidth}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </main>
+                    <footer class="panel-footer exploreFooter">
+                        <a href="/category/name/纪实}" target="_blank"><strong>发现更多</strong></a>
+                    </footer>
+                </section>
+            </section>
+
+        </section>
+
+    </div>
+    <aside class="col-md-2">
+        <div class="list-group asideGroup">
+            <a class="list-group-item">
+                <h3 class="list-group-item-heading">
+                    推荐用户
+                </h3>
+            </a>
+            {volist name="userList" id="user" }
+            <a href="/user/id/{$user.id}" class="list-group-item">
+                <h4 class="list-group-item-heading">
+                    {$user.name}
+                </h4>
+                <p class="list-group-item-text">
+                    <strong>粉丝：</strong>{$user.followers}
+                </p>
+                <p class="list-group-item-text">
+                    <strong>关注：</strong>{$user.followings}
+                </p>
+                <p class="list-group-item-text">
+                    <strong>收获赞数：</strong>{$user.totalThumbUp}
+                </p>
+            </a>
+            {/volist}
+        </div>
+    </aside>
+</div>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script>
+    $(".justified-gallery").justifiedGallery({
+        rowHeight : 200,
+        margins : 3,
+        waitThumbnailsLoad : false
+    });
+
+    $(function () {
+        $('.panel-body').each(function () {
+            if($(this).children().children().length==0){
+                $(this).html("<p style=\"text-align: center;font-size: 1em\">暂时没有这类摄影作品：（</p>");
+            }
+        });
+    });
+</script>

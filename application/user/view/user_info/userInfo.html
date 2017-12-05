@@ -1,11 +1,20 @@
 {include file="index@index/header"/}
 <div class="container main">
     <div class="profileHeader">
-        <div class="bg">
+        <div class="bg" style="height: 240px">
 
         </div>
-        <div class="profileHeader-wrapper" style="padding-left: 20px;height:130px;">
-            <p><img src="__img__/userDefault.jpg"class="profileHeader-photo"></p>
+        <div class="profileHeader-wrapper" style="padding-right: 20px;height:130px;">
+         <div class="profileHeader-photo" style="padding: 10px;border-style: solid;border-width: 1px;border-radius: 5px;border-color: white">
+            <a href="#">
+                <img src="__img__/userDefault.jpg" style="width: 200px;height: 200px">
+                <div id="profileHead" style="position: absolute;width: 200px;height: 200px;left: 10px;top: 10px;background-color: black;opacity: 0.7;display: none">
+                    <span class="glyphicon glyphicon-camera" style="color: white;margin-left: 80px;margin-top: 70px;font-size: 40px"></span>
+                    <p style="color: white;margin-left: 40px;margin-top: 10px;font-size: 20px">修改我的头像</p>
+                </div>
+            </a>
+
+        </div>
         </div>
     </div>
 
@@ -60,8 +69,9 @@
 
                      </div>
                  </div>-->
-                <div style="width: 100%;border: 0;border-bottom:solid;border-width: 1px;border-color: #DCDCDC;padding-bottom: 10px">
-                    <div class="row">
+                <!--<div style="width: 100%;border: 0;border-bottom:solid;border-width: 1px;border-color: #DCDCDC;padding-bottom: 10px">-->
+                <div class="well" >
+                <div class="row">
                         <div class="col-md-3"><h2 style="margin-left: 20px;color: #2b669a;">我的作品</h2></div>
                         <div class="col-md-9"> <button  data-toggle="modal" data-target="#pictureDetail" data-trigger="hover" data-toggle="popover" data-content="发表新作品" data-placement="right" type="button" id="addArticle" class="btn btn-default btn-circle btn-lg"  style="float: left;margin-top: 15px;"><i class="glyphicon glyphicon-plus"></i></button></div>
                     </div>
@@ -84,20 +94,29 @@
                         </a>
 
                     </main>
-                    <footer>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                    <footer class="row">
+                        <div class="btn-group col-md-4 col-md-offset-8" style="">
+                        <button type="button" class="btn btn-default btn-medium" style="font-size: 15px"
                                 aria-label="Left Align">
                             <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>&nbsp;star
                         </button>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
-                                aria-label="Left Align">
-                            <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>15
+                        <button type="button" class="btn btn-default btn-medium" style="font-size: 15px"
+                                aria-label="Left Align"  aria-hidden="true" data-toggle="collapse"
+                                data-target="#demo">
+                            <span class="glyphicon glyphicon-comment"></span>20
                         </button>
-                        <button type="button" class="btn btn-default btn-medium" style="margin-right:10px;font-size: 15px;border-radius: 10px;"
+                        <button type="button" class="btn btn-default btn-medium" style="font-size: 15px"
                                 aria-label="Left Align">
-                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>21
+                            <span class="glyphicon glyphicon-heart-empty" aria-hidden="true"></span>36
                         </button>
+                        </div>
                     </footer>
+                    <!--折叠回复框-->
+                    <div id="demo" class="collapse">
+                        Nihil anim keffiyeh helvetica, craft beer labore wes anderson
+                        cred nesciunt sapiente ea proident. Ad vegan excepteur butcher
+                        vice lomo.
+                    </div>
                 </section>
                 <section class="article">
                     <header>
@@ -162,13 +181,12 @@
     </div>
 
 </div>
-
-<div class="modal fade" id="pictureDetail" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+<div class="modal fade" id="pictureDetail"  role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" style="width:1000px">
         <div class="modal-content" style="min-height:600px;height:auto!important;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">分享新的作品</h4>
+                <h4 class="modal-title">分享新的作品</h4>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
@@ -185,40 +203,29 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="tag" class="col-sm-2 control-label">摄影标签</label>
-                        <div class="col-sm-10 dropdown" id="tag">
-                            <button type="button" class="btn dropdown-toggle" style="float: left" id="tagMenu" data-toggle="dropdown">添加标签
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu" aria-labelledby="tagMenu">
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">人物</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">生态</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">风景</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem"  tabindex="-1" href="#">纪实</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">商业</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">概念</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">艺术</a>
-                                </li>
-                                <li role="presentation">
-                                    <a role="menuitem" tabindex="-1" href="#">宠物</a>
-                                </li>
-                            </ul>
-                            <div class="clear"></div>
+                        <label for="workCategory" class="col-sm-2 control-label">摄影类别</label>
+                        <div class="col-sm-10">
+                        <select id="workCategory">
+                                <option value="人物">人物</option>
+                                <option value="生态">生态</option>
+                                <option value="艺术">艺术</option>
+                                <option value="宠物">宠物</option>
+                                <option value="商业">商业</option>
+                                <option value="概念">概念</option>
+                                <option value="风景">风景</option>
+                                <option value="纪实">纪实</option>
+                        </select>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="workTopic" class="col-sm-2 control-label">摄影话题</label>
+                        <div class="col-sm-10">
+                            <select id="workTopic">
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
                         <div id="div-file" class="file-loading" style="margin: 0" >
                             <input id="file" class="file" type="file"  name="image[]" multiple data-preview-file-type="any">
@@ -235,10 +242,73 @@
 </div>
 <script src="__JS__/fileinput.min.js"></script>
 <script src="__JS__/zh.js"></script>
+<script src="__JS__/select2.min.js"></script>
 
 <script>
+    $(document).ready(function() {
+        $('#workCategory').select2({
+            language: "zh-CN",  //设置 提示语言
+            width: "150px", //设置下拉框的宽度
+        });
+        $('#workTopic').select2({
+            language: "zh-CN",  //设置 提示语言
+            width: "300px", //设置下拉框的宽度
+
+            ajax: {
+                url: "http://www.igallery.com/searchTopic",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    //console.log(data.items);
+                    return {
+                        results: data,
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 1,
+            placeholder: "请选择",
+            tags: false,  //设置必须存在的选项 才能选中
+            templateResult: function (repo) { //搜索到结果返回后执行，可以控制下拉选项的样式
+                console.log("====================templateResult开始==================");
+                console.log(repo);
+                console.log("====================templateResult结束==================");
+                if (repo.loading) return repo.text;
+                var markup = "<div class=''>" + repo.text + "</div>";
+                return markup;
+            }
+        });
+    });
+    $(document).ready(function () {
+       $('div.profileHeader-photo').hover(
+           function () {
+                $("#profileHead").show();
+       },function () {
+               $("#profileHead").hide();
+       });
+    });
+
+    $('#pictureDetail').on('show.bs.modal', function (e) {
+        $(document.body).css({
+            "overflow-x":"hidden",
+            "overflow-y":"hidden"
+        });
+    })
     $('#pictureDetail').on('hidden.bs.modal', function () {
         clearModal();
+        $(document.body).css({
+            "overflow-x":"auto",
+            "overflow-y":"auto"
+        });
     });
 
     $(document).ready(function () {
@@ -258,7 +328,7 @@
     //初始化图片插件
         $("#file").fileinput({
             language: 'zh', //设置语言
-            uploadUrl: 'http://www.pics.com/uploadPicture', //上传的地址
+            uploadUrl: 'http://www.igallery.com/uploadWork', //上传的地址
             allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
             uploadAsync: false, //默认异步上传
             showUpload: false, //是否显示上传按钮
@@ -269,14 +339,8 @@
             browseClass: "btn btn-primary", //按钮样式
             dropZoneEnabled: true,//是否显示拖拽区域
             layoutTemplates: {
-                // actionDelete:'', //去除上传预览的缩略图中的删除图标
                 actionUpload: '',//去除上传预览缩略图中的上传图片；
-                // actionZoom:''   //去除上传预览缩略图中的查看详情预览的缩略图标。
             },
-            //minImageWidth: 50, //图片的最小宽度
-            //minImageHeight: 50,//图片的最小高度
-            //maxImageWidth: 200,//图片的最大宽度
-            //maxImageHeight: 200,//图片的最大高度
             maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
             minFileCount: 1,
             maxFileCount: 10, //表示允许同时上传的最大文件个数
@@ -287,80 +351,39 @@
             uploadExtraData: function () {   //额外参数的关键点
                 //TODO
                 var obj = {};
-                obj.id = 1;
                 obj.title = $('#title').val();
+                obj.category = $('#workCategory').val();
+                obj.topicId = $('#workTopic').val();
                 obj.description = $('#description').val();
-                //var tags=$('#tag').find('.active').text();
-                //obj.tags=tags;
                 console.log(obj);
                 return obj;
             }
         }).on("filebatchuploadsuccess", function (event, data) {
+            console.log(data);
             console.log('文件上传成功！');
            //TODO  关闭页面，给予提示
-//    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
-//        console.log('文件上传失败！');
+    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
+        console.log('文件上传失败！');
         });
 
     $(function (){
         $("[data-toggle='popover']").popover();
     });
     $(function(){
-        $.get("/article",function(data,status){
+        $.get("/work",function(data,status){
             $("#content").append(data);
         });
     });
-    $(document).ready(function (){
-        $("[role='menuitem']").click(function (e) {
-            //console.log("click");
-            e.preventDefault();
-            //设置标签的li是否active，并根据需要在a后面生成/消除label
-            var text = $(this).text();
-            var tagId;
-            switch (text){
-                case '人物':tagId='people';break;
-                case '生态':tagId='wile';break;
-                case '风景':tagId='scene';break;
-                case '纪实':tagId='documentary';break;
-                case '商业':tagId='commerce';break;
-                case '概念':tagId='concept';break;
-                case '艺术':tagId='art';break;
-                case '宠物':tagId='pet';break;
-            }
-            //console.log(tagId);
-            if($(this).parent().hasClass('active')){
-                $(this).parent().removeClass('active');
-                var temp = '#'+tagId;
-                $(temp).remove();
-            }
-            else{
-                $(this).parent().addClass('active');
-                $("#tagMenu").after("<span class='label label-info' id='"+tagId+"' style='float: left;margin:5px;font-size: medium '>"+$(this).text()+"</span>");
 
-            }
-
-        });
-    });
-
-    /**$(document).ready(function () {
-        $('div.descriptionBox').hover(
-            function () {
-                console.log("in");
-                $(this).animate({opacity:0.5},300);
-            },function () {
-                console.log("out");
-                $(this).animate({opacity:0},300);
-            });
-    });**/
     $(document).ready(function () {
         $("#content").on("mouseenter", "a.avatar", function () {
-            console.log("in");
-            var text = $(this).find("div").text();
-            console.log(text);
+           // console.log("in");
+            //var text = $(this).find("div").text();
+            //console.log(text);
             $(this).find("div").show();
         });
         $("#content").on("mouseleave", "a.avatar", function () {
-            console.log("out");
+           // console.log("out");
             $(this).find("div").hide();
         });
 //        $('a.avatar').hover(

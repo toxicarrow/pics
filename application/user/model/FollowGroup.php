@@ -2,14 +2,15 @@
 /**
  * Created by PhpStorm.
  * User: 涵
- * Date: 2017/11/21
- * Time: 14:34
+ * Date: 2017/11/24
+ * Time: 22:59
  */
 
 namespace app\user\model;
 use think\Model;
 
-class Picture extends Model
+
+class FollowGroup extends Model
 {
 
 }

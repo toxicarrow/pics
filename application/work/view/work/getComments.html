@@ -1,0 +1,12 @@
+<div>
+    <ul>
+        {volist name='commentList' id='comment'}
+        <li> <a href="/userIndex/id/{$comment.reviewerId}"><strong>{$comment.reviewerName}：</strong></a>
+            <a href="@{$comment.reviewerName}：" class="reply"><small>回复</small></a>
+            <p>{$comment.review}</p>
+            <p style="text-align: right"><time datetime="{$comment.time}">{$comment.time} </time></p>
+        </li>
+        {/volist}
+    </ul>
+</div>
+{$commentList->render()}

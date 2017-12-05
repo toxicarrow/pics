@@ -156,7 +156,7 @@ return [
     // 错误显示信息,非调试模式有效
     'error_message'          => '页面错误！请稍后再试～',
     // 显示错误信息
-    'show_error_msg'         => false,
+    'show_error_msg'         => true,
     // 异常处理handle类 留空使用 \think\exception\Handle
     'exception_handle'       => '',
 
@@ -205,7 +205,7 @@ return [
         // SESSION_ID的提交变量,解决flash上传跨域
         'var_session_id' => '',
         // SESSION 前缀
-        'prefix'         => 'think',
+        'prefix'         => 'igallery',
         // 驱动方式 支持redis memcache memcached
         'type'           => '',
         // 是否自动开启 SESSION

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>登出</h1>
+</body>
+<script src="__JS__/jquery-3.2.1.min.js"></script>>
+<script src="__JS__/jquery.cookie.js"></script>
+<script>
+    $(document).ready(function() {
+        $.cookie('id',null,{expires:-1});
+        $.cookie('name',null,{expires:-1});
+    });
+
+</script>
+</html>

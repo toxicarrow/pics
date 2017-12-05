@@ -1,0 +1,300 @@
+{include file="index@index/header"/}
+<link rel="stylesheet" href="__CSS__/workDetail.css">
+<link rel="stylesheet" href="__CSS__/lightbox.css">
+<div class="container" id="workContainer" style="margin-right: 100px">
+    <div class="row">
+        <section class="col-md-9 col-sm-12" id="work">
+            <article class="workMain" id="workMain">
+                <header>
+                    <section id="authorInfo">
+                        <img src="__img__/userDefault.jpg" style="width: 4em;height: 4em;border-radius: 50%;float: left">
+                        <strong style="padding:0.5em;float: left;font-size: 1.5em;font-family: 仿宋">{$authorName}</strong>
+                        <button id="follow" style="margin:1em;" class="btn-sm btn btn-info" >+&nbsp;关注</button>
+                        <div class="clear"></div>
+                    </section>
+                    <h2>{$title}</h2>
+                </header>
+                <main>
+                    <section class="well" id="workDescription">
+                        <p>摄影类别：<a href="http://www.igallery.com/category/name/{$category}"><span class="label label-primary">{$category}</span></a> </p>
+                        <p>话题：{$topic}</p>
+                        <p>简介：{$description}</p>
+                    </section>
+                    <section id="workPicture">
+                        <div id="workGallery" class="justified-gallery" >
+                            {volist name="list" id="picture" }
+                            <a href="{$picture.path}" data-lightbox="workPictures" class="workPicture">
+                                <img src="{$picture.path}" alt="{$picture.title}"/>
+                            </a>
+                            {/volist}
+                        </div>
+                    </section>
+                </main>
+                <footer>
+                    <button type="button" class="btn btn-default btn-large" style="margin:1em;font-size: 1.5em;border-radius: 10px;"
+                            aria-label="Left Align">
+                        <span class="glyphicon glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{$thumbUp}
+                    </button>
+                </footer>
+            </article>
+            <section id="workComment">
+                <section id="comments">
+                    <div>
+                        <ul>
+                            {volist name='commentList' id='comment'}
+                            <li> <a href="/userIndex/id/{$comment.reviewerId}"><strong>{$comment.reviewerName}：</strong></a>
+                                <a href="@{$comment.reviewerName}：" class="reply"><small>回复</small></a>
+                                <p>{$comment.review}</p>
+                                <p style="text-align: right"><time datetime="{$comment.time}">{$comment.time} </time></p>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                    {$commentList->render()}
+                </section>
+
+                <section class="commentArea" id="{$workId}">
+                    <textarea id="commentText" placeholder="说些什么吧" style="font-size: 1em;width: 80%"  rows="5"></textarea>
+                    <p><button id="sendComment" class="btn btn-sm btn-info" style="">发表评论</button></p>
+                </section>
+            </section>
+        </section>
+        <aside class="col-md-2 hidden-xs col-sm-4" id="rightSide">
+            <section  class="panel  panel-primary" id="otherWork">
+                <header class="panel-heading">
+                    <h3 class="panel-title">
+                        作者的其他作品
+                    </h3>
+                </header>
+                <main class="panel-body">
+                    {volist name="workList" id="work" }
+                    <a href="/workDetail/id/{$work.id}" class="list-group-item">
+                        <p>{$work.title}</p>
+                    </a>
+                    {/volist}
+                </main>
+                <footer class="panel-footer"></footer>
+            </section>
+            <section class=" panel panel-info" id="hotWork">
+                <header class="panel-heading">
+                    <h3 class="panel-title">
+                        热门作品
+                    </h3>
+                </header>
+                <main class="panel-body">
+                    {volist name="hotWorkList" id="hotWork" }
+                    <a href="/workDetail/id/{$hotWork.id}" class="list-group-item">
+                        <p>{$hotWork.title}</p>
+                    </a>
+                    {/volist}
+                </main>
+                <footer class="panel-footer">
+
+                </footer>
+            </section>
+            <section id="hotTopic" class=" panel panel-danger">
+                <header class="panel-heading">
+                    <h3 class="panel-title">
+                        热门话题
+                    </h3>
+                </header>
+                <main class="panel-body">
+                    {volist name="hotTopicList" id="hotTopic" }
+                    <a href="/topicDetail/id/{$hotTopic.id}" class="list-group-item">
+                        <p>{$hotTopic.topicName}</p>
+                    </a>
+                    {/volist}
+                </main>
+                <footer class="panel-footer">
+
+                </footer>
+            </section>
+        </aside>
+    </div>
+</div>
+<footer class="well" style="margin-top:3em;">
+
+</footer>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script src="__JS__/lightbox.js"></script>
+
+<script>
+    var authorId;
+    function getWorkId(){
+        return $('.commentArea').attr('id');
+    }
+
+    function setReplyListener() {
+        $('.reply').click(function (e) {
+            e.preventDefault();
+            $('#commentText').val($(this).attr('href'));
+        });
+    }
+
+
+//    $(function () {
+//       //根据浏览者是否为当前作品作者更改页面
+//        var id=$.cookie('id');
+//        var workId=getWorkId();
+//        var url="/getAuthorIdByWork/workId/"+workId;
+//        $.get(url,function(data){
+//            authorId=data['authorId'];
+//            if(id==null){
+//                return;
+//            }
+//            else if(id==authorId){
+//                $('#follow').attr('disabled',true);
+//            }
+//        });
+//
+//        //设置回复标签监听
+//        setReplyListener();
+//    });
+
+    $(function () {
+        //设置关注按钮状态，回复标签监听和关注按钮监听
+        if(authorId==undefined){
+            var id=$.cookie('id');
+            var workId=getWorkId();
+            var url="/getAuthorIdByWork/workId/"+workId;
+            $.get(url,function(data){
+                authorId=data['authorId'];
+                if(id==null){
+                    return;
+                }
+                else if(id==authorId){
+                    $('#follow').attr('disabled',true);
+                }
+                setFollowButton();
+                setReplyListener();
+
+                $('#follow').click(function () {
+                    var id=$.cookie('id');
+                    if(id==null){
+                        swal('请先登录！','','info');
+                        return;
+                    }
+                    if($('#follow').hasClass('active')){
+                        unFollow();
+                    }
+                    else{
+                        follow();
+                    }
+
+                });
+            });
+        }
+    });
+
+    function setFollowButton(){
+        //还没登录
+        if($.cookie('id')==null){
+            return;
+        }
+        var url="/isFollow/target/"+authorId;
+        $.get(url,function(data){
+            if(data['code']==1){
+                $('#follow').addClass('active');
+                $('#follow').text('已关注');
+            }
+        });
+    }
+    function unFollow(){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/unfollow",
+            data:{target:authorId},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+                $('#follow').removeClass('active');
+                $('#follow').text('+关注');
+            } ,
+        });
+    }
+
+    function follow(){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/follow",
+            data:{target:authorId},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+                $('#follow').addClass('active');
+                $('#follow').text('已关注');
+            } ,
+        });
+    }
+    $(function () {
+        $('#sendComment').click(function () {
+            var id=$.cookie('id');
+            //未登录
+            if(id==null){
+                swal("尚未登录!", "请先登录再执行操作", "info");
+                return;
+            }
+            var text=$('#commentText').val();
+            if(text==""){
+                swal("评论不得为空!", "请填写评论", "info");
+                return;
+            }
+
+            //发表评论
+            var workId = $('.commentArea').attr('id');
+            $.ajax({
+                type:"POST",
+                url:"http://www.igallery.com/comment",
+                data:{text:text,workId:workId},
+                datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+                success:function(data){
+                    swal(data['msg'],"","success");
+                    window.location.reload();
+                } ,
+            });
+        });
+    });
+$("#workGallery").justifiedGallery({
+    rowHeight : 300,
+    margins : 3,
+//    waitThumbnailsLoad : false
+});
+lightbox.option({
+    'resizeDuration': 200,
+    'wrapAround': true,
+    wrapAround:true,
+    positionFromTop:50,
+    resizeDuration:300,
+})
+
+$(function()
+{
+//
+//    //绑定pagination a  Click事件
+//    console.log("刷新初始化");
+    $(".pagination a").click(function() {
+        //回复的click
+        console.log("click");
+        var page = $(this).attr("href");
+        getPage(page);
+        //禁止A标签跳转
+        return false;
+    });
+
+    function getPage(url)
+    {
+        $.get(url,function(data,status){
+            $("#comments").html(data);
+            //ajax局部刷新后，需要重新绑定！！！
+            $(".pagination a").click(function() {
+                console.log("click");
+                var page = $(this).attr("href");
+                getPage(page);
+                //禁止A标签跳转
+                return false;
+            });
+            setReplyListener();
+        });
+
+    }
+
+}) ;
+</script>
