@@ -1,0 +1,132 @@
+{include file='index/header'}
+<section style="margin-top:4em;">
+    <div class="input-group" style="margin-left: 30%;width:40%;margin-bottom:15px">
+        <input type="text" class="form-control" id="search" placeholder="搜索用户/作品" value="{$content}">
+        <span class="input-group-btn">
+            <button class="btn btn-default" id="searchBtn" type="button"><span class="glyphicon glyphicon-search"></span></button>
+        </span>
+    </div>
+    <section id="userResult" class="panel panel-info" style="width: 90%;margin-left: 5%">
+        <header class="panel-heading">
+            <h1 class="panel-title" style="font-size: 1.5em">搜索到的用户</h1>
+        </header>
+        <main class="panel-body">
+            <div style="margin-top: 10px;font-family: Georgia" id="following">
+
+                {volist name="users" id="user" }
+                <section class="follow-section" style="float: left;width: 370px;background-color: white;margin: 10px">
+                    <div style="width: 100%;height:100px;background-image: url({$user.bgImg});background-size:cover"></div>
+                    <section class="follow-body" style="padding-left: 20px">
+                        <div class="row" style="height:90px">
+                            <section class="col-md-2" style="padding:10px">
+                                <a href="/user/{$user.id}">
+                                    <img src="{$user.profilePhoto}" style="width:50px;height:50px;border-radius: 50%"/>
+                                </a>
+                            </section>
+                            <section class="col-md-5" style="padding-top:40px">
+                                <a href="/user/{$user.id}">
+                                    <strong>{$user.name}</strong>
+                                </a>
+                            </section>
+                            <section class="col-md-4" style="text-align: right;padding: 20px">
+                                <button class="btn-primary btn followBtn" style="text-align: right" data-id="{$user.id}">{$user.follow}</button>
+                            </section>
+                        </div>
+                        <div class="text-align" style="height:100px">
+                            <p>关注：{$user.followings} &nbsp; /  &nbsp; 粉丝：{$user.followers}&nbsp; /  &nbsp; 作品数量：{$user.workNum}</p>
+                            <p>{$user.description}</p>
+                        </div>
+                    </section>
+                </section>
+                {/volist}
+            </div>
+            <div class="clear"></div>
+        </main>
+        <footer style="height:50px;"></footer>
+    </section>
+
+    <section id="workResult" class="panel panel-info" style="width: 90%;margin-left: 5%;margin-top:20px">
+        <header class="panel-heading">
+            <h1 class="panel-title" style="font-size: 1.5em">搜索到的作品</h1>
+        </header>
+        <main class="panel-body">
+            <div style="margin-top: 10px;font-family: Georgia" id="works">
+                <div id="workGallery" class="justified-gallery" >
+                    {volist name="works" id="work" }
+                    <a href="http://www.igallery.com/workDetail/id/{$work.id}" target="_blank">
+                        <img src="{$work.thumbPath}" alt="{$work.title}"/>
+                    </a>
+                    {/volist}
+                </div>
+            </div>
+            <div class="clear"></div>
+        </main>
+        <footer style="height:60px;"></footer>
+    </section>
+
+</section>
+<footer style="height: 100px"></footer>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script>
+        $('.followBtn').click(function () {
+            console.log("click");
+            var currentId=$.cookie('id');
+            if(currentId==null){
+                swal('请先登录！','','info');
+            }
+            else{
+                var id=$(this).attr('data-id');
+                if(id==currentId){
+                    swal('无法关注自己！','','info');
+                }
+                else{
+                    if($(this).text()=='关注'){
+                        follow(id);
+                        $(this).text('已关注');
+                    }
+                    else{
+                        unFollow(id);
+                        $(this).text('关注');
+                    }
+                }
+
+            }
+        });
+
+        $("#workGallery").justifiedGallery({
+            rowHeight : 200,
+            margins : 3,
+        });
+        $(function () {
+            if($('#workGallery').children().length==0){
+                $('#works').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">没有相关的摄影作品：（</p>");
+            }
+
+            if($('#following').children().length==0){
+                $('#following').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">没有相关的用户：（</p>");
+            }
+        })
+    function follow(id){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/follow",
+            data:{target:id},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+            } ,
+        });
+    }
+    function unFollow(id){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/unfollow",
+            data:{target:id},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+            } ,
+        });
+    }
+    $("#searchBtn").click(function () {
+        window.location.href='/searchResult/content/'+$('#search').val();
+    })
+</script>

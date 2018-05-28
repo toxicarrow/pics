@@ -1,11 +1,14 @@
 <?php
 namespace app\user\controller;
+use app\common\Util;
 use app\user\model\service\UserService;
 use think\Controller;
 use think\Request;
 use app\user\model\Follower;
 use app\user\model\FollowGroup;
 use think\Db;
+use think\Session;
+use think\Image;
 class UserInfoController extends Controller{
     //进入用户界面
     public function userInfo(){
@@ -28,9 +31,6 @@ class UserInfoController extends Controller{
         $follow = new Follower;
         $follow->id = $targetId;
         $follow->follower = $follower;
-        if($request->param("group")!=null){
-            $follow->groupName = $request->param("group");
-        }
         $follow->date = date("Y-m-d h:i:sa");
         if($follow->save()){
             return json(true);
@@ -40,6 +40,88 @@ class UserInfoController extends Controller{
         }
     }
 
+    public function changeProfileHeader(Request $request){
+        $id=Session::get('user_id');
+        $user=UserService::getUserById($id);
+        $this->assign('id',$id);
+        $this->assign('path',$user['profilePhoto']);
+        return $this->fetch('changeHead');
+    }
+
+    public function bgPreview(Request $request){
+        $id=Session::get('user_id');
+        $user=UserService::getUserById($id);
+        $this->assign('id',$id);
+        $this->assign('path',$user['bgImg']);
+        return $this->fetch('bgUpload');
+    }
+    public function uploadBg(Request $request){
+        $id=Session::get('user_id');
+        $msg=array();
+        $msg['state']=200;
+        $file=$request->file('avatar_file');
+        $data=$request->param('avatar_data');
+        $image = Image::open($file);
+        $data = json_decode(stripslashes($data));
+        $tmp_img_w = $data-> width;
+        $tmp_img_h = $data -> height;
+        $src_x = $data -> x;
+        $src_y = $data -> y;
+
+        $image->crop($tmp_img_w,$tmp_img_h,$src_x,$src_y);
+        $saveName = $request->time() . '.png';
+        $image->save(ROOT_PATH . 'public/upload/' . $saveName);
+        Db::table('user')
+            ->where('id',$id)
+            ->update(['bgImg'=>Util::$website.'/upload/'. $saveName]);
+        return json($msg);
+    }
+    public function uploadProfileHead(Request $request){
+        $id=Session::get('user_id');
+        $msg=array();
+        $msg['state']=200;
+        $file=$request->file('avatar_file');
+        $data=$request->param('avatar_data');
+        $src=$request->param('avatar_src');
+////        $info = $file->move(ROOT_PATH . 'public' . DS . 'upload');
+        $image = Image::open($file);
+        $data = json_decode(stripslashes($data));
+        $src_img_w=$image->width();
+        $src_img_h=$image->height();
+        $tmp_img_w = $data-> width;
+        $tmp_img_h = $data -> height;
+        $src_x = $data -> x;
+        $src_y = $data -> y;
+        $dst_img_w = 220;
+        $dst_img_h = 220;
+
+//$msg['obj']=$data;
+        $image->crop($tmp_img_w,$tmp_img_h,$src_x,$src_y);
+        $saveName = $request->time() . '.png';
+        $image->save(ROOT_PATH . 'public/upload/' . $saveName);
+        Db::table('user')
+            ->where('id',$id)
+            ->update(['profilePhoto'=>Util::$website.'/upload/'. $saveName]);
+        return json($msg);
+    }
+    public function editInfo($id){
+        $currentId=Session::get('user_id');
+        if($currentId==null||$currentId!=$id){
+            return "你没有访问的权限！";
+        }
+        $user=UserService::getUserById($id);
+        $this->assign('userName',$user['name']);
+        $this->assign('userDescription',$user['description']);
+        $this->assign('profileHead',$user['profilePhoto']);
+        return $this->fetch();
+    }
+    public function userPhoto(Request $request){
+        $id=Session::get('user_id');
+        $user=UserService::getUserById($id);
+        $msg=array();
+        $msg['path']=$user['profilePhoto'];
+        return json($msg);
+    }
     /**
      * 是否为关注状态
      */
@@ -83,95 +165,77 @@ class UserInfoController extends Controller{
                 'id'=> $targetId,
                 'follower'=>$follower,
             ])->delete();
-
     }
 
-    /**
-     * 添加关注分组
-     */
-    public function addGroup(Request $request){
-        $userId = $request->session("user_id");
-        if($userId==null){
-            return json("请先登录");
+    public function changeBaseInfo(Request $request){
+        $msg=array();
+        $id=Session::get('user_id');
+        if($id==null){
+            $msg['code']=0;
+            $msg['msg']="请先登录！";
+            return json($msg);
         }
-        $group = new FollowGroup;
-        $groupName = $request->param("groupName");
-        $group->groupName = $groupName;
-        $group->userId = $userId;
-        if($group->save()){
-            $this->success("成功");
-            return json("成功");
+        $name=$request->param('name');
+        if($name==""){
+            $msg['code']=0;
+            $msg['msg']="昵称不得为空！";
+            return json($msg);
         }
-        else{
-            return json("失败");
-        }
+        $description=$request->param('description');
+        Db::table('user')
+            ->where('id',$id)
+            ->update([
+                'name'=>$name,
+                'description'=>$description,
+            ]);
+        $msg['code']=1;
+        $msg['msg']="修改成功！";
+        return json($msg);
     }
 
-
-    /**
-     * 删除分组
-     *
-     */
-    public function deleteGroup(Request $request){
-        $userId = $request->session("user_id");
-        if($userId==null){
-            return json("请先登录");
+    public function changePwd(Request $request){
+        $msg=array();
+        $id=Session::get('user_id');
+        if($id==null){
+            $msg['code']=0;
+            $msg['msg']="请先登录！";
+            return json($msg);
         }
-        $group = new FollowGroup;
-        $groupName = $request->param("groupName");
-        $result = Db::table('follow_group')
-            ->where([
-                'userId'=> $userId,
-                'groupName'=>$groupName,
-            ])->delete();
-
-        //TODO 测试删除分组内所有关注
-        Db::table('follower')
-            ->where([
-                'id'=>$userId,
-                'groupName'=> $groupName,
-            ])->delete();
-        return json($result);
-    }
-
-
-    /**
-     * 改变一个关注的分组 TODO测试
-     */
-    public function changeGroup(Request $request){
-        $follower = $request->session("user_id");
-        if($follower==null){
-            return json("请先登录");
+        $originPwd=$request->param('originPwd');
+        $newPwd=$request->param('newPwd');
+        $confirmPwd=$request->param('confirmPwd');
+        if($originPwd==""){
+            $msg['code']=0;
+            $msg['msg']="请输入原密码！";
+            return json($msg);
         }
-        $follow = $request->param("follow");
-        $group = $request->param("group");
-        $result = Db::table('follower')
-            ->where([
-                'id'=>$follow,
-                'follower'=> $follower,
-            ])
-            ->update(['groupName' => $group]);
-        return json($result);
-    }
 
-    /**
-     * 将一个分组的关注全部转移到另一个
-     */
-    public function changeAll(Request $request){
-        $follower = $request->session("user_id");
-        if($follower==null){
-            return json("请先登录");
+        if($newPwd!=$confirmPwd){
+            $msg['code']=0;
+            $msg['msg']="两次密码输入不一致！";
+            return json($msg);
         }
-        $origin = $request->param("origin");
-        $target = $request->param("target");
-        $result = Db::table('follower')
-            ->where([
-                'follower'=>$follower,
-                'groupName'=> $origin,
-            ])
-            ->update(['groupName' => $target]);
-        return json($result);
 
+        $user=UserService::getUserById($id);
+        $salt = $user['salt'];
+        $rightPwd = $user['password'];
+        $currentPwd = sha1(sha1($originPwd).$salt);
+        if($rightPwd==$currentPwd){
+            $newSalt=Util::getRandChar(10);
+            $newPassword=sha1(sha1($newPwd).$newSalt);
+            Db::table('user')
+                ->where('id',$id)
+                ->update([
+                    'salt'=>$newSalt,
+                    'password'=>$newPassword,
+                ]);
+            $msg['code']=1;
+            $msg['msg']="修改成功！";
+            return json($msg);
+        }
+        $msg['code']=0;
+        $msg['msg']="原密码错误！";
+        return json($msg);
     }
     /**
      * 得到所有关注自己的人的信息

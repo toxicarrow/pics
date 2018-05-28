@@ -8,6 +8,8 @@
 
 namespace app\user\controller;
 
+use think\Request;
+
 class VerifyController
 {
     public function __construct()
@@ -15,7 +17,8 @@ class VerifyController
 
     }
 
-    function sendVerification($phone){
+    function sendVerification(Request $request){
+        $phone=$request->param('phone');
         $ch = curl_init();
         //设置抓取的url
         curl_setopt($ch, CURLOPT_URL, 'https://api.netease.im/sms/sendcode.action');
@@ -46,15 +49,18 @@ class VerifyController
         //$err_code = curl_errno($ch);
         //关闭URL请求
         curl_close($ch);
-        return $data;
+//        return json($data);
+        $msg=array();
         //显示获得的数据
         // print_r($data);
-        //if($data["code"]==200){
-//            return array("成功发送");
-//        }
-//        else{
-//            return "CURL Error:";
-//        }
+        if($data["code"]==200){
+            $msg['code']=200;
+            return json($msg);
+        }
+        else{
+            $msg['code']=404;
+            return json($msg);
+        }
     }
     private static function getHead(){
         $key='51bd993b824327d76a0c8567c7280cde';
@@ -88,7 +94,7 @@ class VerifyController
         //设置抓取的url
         curl_setopt($curl, CURLOPT_URL, 'https://api.netease.im/sms/verifycode.action');
         //设置头文件的信息作为数据流输出
-        curl_setopt($curl, CURLOPT_HEADER, 1);
+//        curl_setopt($curl, CURLOPT_HEADER, 1);
         //设置获取的信息以文件流的形式返回，而不是直接输出。
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
         //设置post方式提交
@@ -109,6 +115,23 @@ class VerifyController
         $data = curl_exec($curl);
         //关闭URL请求
         curl_close($curl);
-        return $data;
+//        $result = stripslashes(html_entity_decode($data)); //$info是传递过来的json字符串
+        $result = json_decode($data,TRUE);
+//        return $data;
+//        $data=htmlspecialchars_decode($data);
+//        $result=json_decode($data,true);
+//        $result=htmlspecialchars_decode($result);
+//        return $result;
+//        $msg=array();
+//        if($result==false){
+//            $msg['code']=0;
+//        }
+//        else if($result['code']==200){
+//            $msg['code']=1;
+//        }
+//        else{
+//            $msg['code']=0;
+//        }
+        return $result;
     }
 }

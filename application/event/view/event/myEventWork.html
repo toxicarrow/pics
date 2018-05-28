@@ -1,0 +1,15 @@
+<div style="margin-top: 10px;font-family: Georgia;padding-left:5%;padding-right:5%" id="eventWork">
+    {volist name="works" id="work"}
+    <section class="bottomBorder" style="width:70%;text-align: center;margin-left:10%">
+        <header>
+            <h3>在活动&nbsp;<a href="/eventDetail/event/{$work.eventId}"><span class="pageTitle">{$work.eventName}</span></a>中发表&nbsp;&nbsp;&nbsp;获赞：{$work.thumbUp}</h3>
+        </header>
+        <main>
+            <img src="{$work.path}" style="width: 100%">
+        </main>
+    </section>
+    {/volist}
+    <header style="height:200px">
+
+    </header>
+</div>

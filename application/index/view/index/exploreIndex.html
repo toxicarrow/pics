@@ -3,6 +3,14 @@
     <div class="col-md-9" style="margin-left: 5%;">
         <section id="exploreMain">
             <section id="allCategory">
+                <section>
+                    <div class="input-group" style="margin-left: 30%;width:40%;margin-bottom:15px">
+                        <input type="text" class="form-control" id="search" placeholder="搜索用户/作品" >
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" id="searchBtn" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                </section>
                 <section id="people" class="panel panel-info">
                     <header class="panel-heading">
                         <h1 class="panel-title" style="font-size: 1.5em">人物摄影</h1>
@@ -17,7 +25,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/人物}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/people" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="pet" class="panel panel-info">
@@ -34,7 +42,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/宠物}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/pet" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="scene" class="panel panel-info">
@@ -51,7 +59,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/风景}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/scene" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="nature" class="panel panel-info">
@@ -68,7 +76,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/生态}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/nature" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="art" class="panel panel-info">
@@ -85,7 +93,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/艺术}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/art" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="concept" class="panel panel-info">
@@ -102,7 +110,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/概念}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/concept" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="commercial" class="panel panel-info">
@@ -119,7 +127,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/商业}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/commercial" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
                 <section id="record" class="panel panel-info">
@@ -136,7 +144,7 @@
                         </div>
                     </main>
                     <footer class="panel-footer exploreFooter">
-                        <a href="/category/name/纪实}" target="_blank"><strong>发现更多</strong></a>
+                        <a href="/category/record" target="_blank"><strong>发现更多</strong></a>
                     </footer>
                 </section>
             </section>
@@ -152,8 +160,9 @@
                 </h3>
             </a>
             {volist name="userList" id="user" }
-            <a href="/user/id/{$user.id}" class="list-group-item">
+            <a href="/user/{$user.id}" class="list-group-item">
                 <h4 class="list-group-item-heading">
+
                     {$user.name}
                 </h4>
                 <p class="list-group-item-text">
@@ -178,6 +187,9 @@
         waitThumbnailsLoad : false
     });
 
+    $('#searchBtn').click(function () {
+        window.open("/searchResult/content/"+$('#search').val(), "_blank");
+    })
     $(function () {
         $('.panel-body').each(function () {
             if($(this).children().children().length==0){

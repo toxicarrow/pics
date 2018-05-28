@@ -1,0 +1,70 @@
+{include file="index@index/header"/}
+<div class="bodyMain">
+    <div style="width: 90%;margin-left:5%" id="scrollMain">
+        <div class="row">
+            <section class="col-md-8 col-sm-12" id="workPlace">
+           {include file="following_work/workBody"/}
+            </section>
+            <aside class="col-md-3 col-sm-12" style="text-align: center;margin-left: 10px;margin-top:20px">
+                <section class="follow-section" style="width: 300px;background-color: white;">
+                    <div style="width: 100%;height:100px;background-image: url({$bgImg})"></div>
+                    <section class="follow-body" style="padding-left: 20px">
+                        <div class="row" style="display: -webkit-flex;display: flex;-webkit-justify-content: center;justify-content: center;height:90px">
+                            <a href="/user/{$userId}">
+                                <img src="{$profilePhoto}" style="width:60px;height:60px;border-radius: 50%;margin-top: 10px"/>
+                            </a>
+                            <a href="/user/{$userId}" style="margin-top:30px;margin-left:10px">
+                                <strong>{$name}</strong>
+                            </a>
+                        </div>
+                        <div style="height:100px">
+                            <div style="display: -webkit-flex;display: flex;-webkit-justify-content: space-around;justify-content: space-around">
+                                <p>关注</br>{$following}</p>
+                                <p>粉丝</br>{$follower}</p>
+                                <p>作品</br>{$workNum}</p>
+                            </div>
+
+                        </div>
+                    </section>
+                </section>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<script>
+    var page=2;
+    var status=1;
+    $(document).ready(function() {
+
+        $(window).scroll(function() {
+//$(document).scrollTop() 获取垂直滚动的距离:最小值为0，最大值：文档高度-可视化窗口高度
+//$(document).scrollLeft() 这是获取水平滚动条的距离
+
+//            if ($(document).scrollTop() <= 0) {
+//                console.log("滚动条已经到达顶部为0");
+//            }
+
+            /**
+             *$(document).height():文档的高度
+             *$(window).height()：可视域的高度：窗口的大小：根据浏览窗口的大小变化
+             *判断底部:文档高度<=滚动条垂直高度+可视窗口的高度
+             * */
+            if ($(document).scrollTop() >= $(document).height() - $(window).height()-1) {
+                console.log("滚动条已经到达底部为" + $(document).scrollTop());
+                $.get("/followingWork/page/"+page,function(data){
+                    if(status==0){
+                        return;
+                    }
+                    if(data[0]=="空"){
+                        $(".bodyMain").append("<p style='text-align: center'>没有更多作品了：（</p>");
+                        status=0;
+                        return;
+                    }
+                    $("#workPlace").append(data);
+                    page++;
+                });
+            }
+        });
+    });
+</script>

@@ -1,1 +1,239 @@
 {include file="index@index/header"/}
+<div class="bodyMain">
+        <section class="profileMain" data-id="{$userId}" style="background-image: url({$bgImg});background-size:cover">
+            <div class="row">
+                <div class="col-md-1 col-sm-2 col-xs-3" style="padding-left: 2em">
+                    <img src="{$profilePhoto}" class="profileHeader-photo" style="border-radius: 50%">
+                </div>
+                <div class="col-md-2 col-sm-4 col-xs-4" style="padding-top: 10em;color: white">
+                    <h3>{$userName} {$button}</h3>
+                    <p>粉丝：{$followers} &nbsp; /关注：{$followings}&nbsp;/作品：{$workNum}</p>
+                    <p>{$description}</p>
+                </div>
+                <div class="col-md-2 col-md-offset-7 col-sm-4 col-sm-offset-2 col-xs-4 col-xs-2" style="padding-top: 16em;padding-right:2em">
+                    {$changeBg}
+                </div>
+            </div>
+        </section>
+    <section id="userNav">
+        <div class="navbar navbar-default"style="margin-bottom: 0px;text-align: center">
+                <div class="row">
+                    <div class="col-md-offset-4"  role="navigation" aria-expanded="false">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">所有作品</a></li>
+                            <li><a href="#" >关注</a></li>
+                            <li><a href="#">粉丝</a></li>
+                            <li><a href="#">相册</a></li>
+                            <li><a href="#">活动作品</a></li>
+                            <li><a href="#">短视频</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+    </section>
+    <section id="userBody">
+        <div id="contentBody" style="margin-left: 5%;width:90%;min-height: 600px;">
+            <div id="workGallery" class="justified-gallery" >
+                {volist name="allPictures" id="picture" }
+                <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}" target="_blank">
+                    <img src="{$picture.thumbPath}" alt="{$picture.title}"/>
+                </a>
+                {/volist}
+            </div>
+        </div>
+    </section>
+</div>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script src="__JS__/lightbox.js"></script>
+<script>
+    function setFollowListener() {
+        $('.followBtn').click(function () {
+            console.log("click");
+            var currentId=$.cookie('id');
+            if(currentId==null){
+                swal('请先登录！','','info');
+            }
+            else{
+                var id=$(this).attr('data-id');
+                if(id==currentId){
+                    swal('无法关注自己！','','info');
+                }
+                else{
+                    if($(this).text()=='关注'){
+                        follow(id);
+                        $(this).text('已关注');
+                    }
+                    else{
+                        unFollow(id);
+                        $(this).text('关注');
+                    }
+                }
+
+            }
+        });
+    }
+    function follow(id){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/follow",
+            data:{target:id},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+            } ,
+        });
+    }
+    function unFollow(id){
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/unfollow",
+            data:{target:id},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+            } ,
+        });
+    }
+
+    if($('#workGallery').children().length==0){
+        $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">暂时没有摄影作品：（</p>");
+    }
+    $("#workGallery").justifiedGallery({
+        rowHeight : 200,
+        margins : 3,
+    });
+function getUserId(){
+    return $('.profileMain').attr('data-id');
+}
+
+$(document).ready(function () {
+    setFollowListener();
+    $('#userNav li').click(function (e) {
+        e.preventDefault();
+        $('#userNav li').removeClass('active');
+        $(this).addClass('active');
+        var text = $(this).text();
+        console.log(text);
+        switch (text) {
+            case "所有作品":
+                changeToWork();
+                break;
+            case "关注":
+               changeToFollowing();
+                break;
+            case "粉丝":
+                changeToFollowers();
+                break;
+            case "相册":
+                changeToAlbum();
+                break;
+            case "资料":
+                changeToInfo();
+                break;
+            case "短视频":
+                changeToVideo();
+                break;
+            case "活动作品":
+                changeToEvent();
+                break;
+            default:;
+        }
+    });
+
+});
+function changeToVideo() {
+    var url='/userVideo/id/'+getUserId();
+//    console.log(url);
+    $.get(url,function(data){
+        $('#contentBody').html(data);
+        if($('#videoContainer').children().length==0){
+            $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">暂时没有短视频：（</p>");
+        }
+        $('.deleteVideo').click(function (e) {
+            e.preventDefault();
+            var id=$.cookie('id');
+            if(id==null){
+                swal("请先登录!");
+                return;
+            }
+            $.get('/deleteVideo/id/'+$(this).attr('data-id'),function () {
+                swal("删除成功!");
+                changeToVideo();
+            })
+        })
+    });
+}
+    function changeToEvent() {
+        var url='/myEventWork/id/'+getUserId();
+//        console.log(url);
+        $.get(url,function(data){
+            $('#contentBody').html(data);
+            if($('#eventWork').children().length==0){
+                $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">暂时没有活动作品：（</p>");
+            }
+        });
+    }
+function changeToAlbum() {
+    var url='/album/'+getUserId();
+    $.get(url,function(data){
+        $('#contentBody').html(data);
+        if($('#album').children().length==0){
+            $('#album').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">暂时没有相册：（</p>");
+        }
+        $(".justified-gallery").justifiedGallery({
+            rowHeight : 200,
+            margins : 3,
+        });
+        lightbox.option({
+            'wrapAround': true,
+        })
+    });
+}
+
+
+function changeToWork() {
+    var url='/allWork/id/'+getUserId();
+    $.get(url,function(data){
+        $('#contentBody').html(data);
+        if($('#workGallery').children().length==0){
+            $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">暂时没有摄影作品：（</p>");
+        }
+        $("#workGallery").justifiedGallery({
+            rowHeight : 200,
+            margins : 3,
+        });
+    });
+}
+
+function changeToFollowing() {
+    var url='/following/id/'+getUserId();
+    $.get(url,function(data){
+        $('#contentBody').html(data);
+        if($('#following').children().length==0){
+            $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">还没有关注：（</p>");
+        }
+        setFollowListener();
+    });
+}
+
+function changeToFollowers() {
+    var url='/follower/id/'+getUserId();
+    $.get(url,function(data){
+        $('#contentBody').html(data);
+        if($('#following').children().length==0){
+            $('#contentBody').html("<p style=\"text-align: center;font-size: 1em;padding-top: 20px\">还没有粉丝：（</p>");
+        }
+        setFollowListener();
+    });
+}
+function changeToInfo() {
+    $("#contentBody").html("<b>资料页面</b>");
+}
+
+
+lightbox.option({
+    'wrapAround': true,
+    wrapAround:true,
+    positionFromTop:50,
+    resizeDuration:300,
+})
+</script>

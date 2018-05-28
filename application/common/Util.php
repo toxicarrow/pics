@@ -9,6 +9,7 @@ namespace app\common;
 class Util
 {
     public static $website="http://www.igallery.com";
+    public static $pageWork=5;//我的关注一页数据量
     static public function getRandChar($length){
         $str = null;
         $strPol = "0123456789abcdefghijklmnopqrstuvwxyz";

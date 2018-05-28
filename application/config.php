@@ -17,9 +17,9 @@ return [
     // 应用命名空间
     'app_namespace'          => 'app',
     // 应用调试模式
-    'app_debug'              => true,
+    'app_debug'              => false,
     // 应用Trace
-    'app_trace'              => true,
+    'app_trace'              => false,
     // 应用模式状态
     'app_status'             => '',
     // 是否支持多模块
@@ -244,5 +244,9 @@ return [
         '__JS__'=>'/static/js',
         '__img__'=>'/static/img',
         '__fonts__'=>'/static/fonts',
+        '__module__'=>'/static/module',
+        '__images__'=>'/static/images',
+        '__adminJs__'=>'/static/js/admin',
+        '__adminCss__'=>'/static/css/admin',
     ],
 ];

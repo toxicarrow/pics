@@ -1,0 +1,126 @@
+{include file="index@index/header"/}
+<div class="container" style="background-color: white;padding-top: 100px;">
+    <div class="row">
+        <div style="border-right: solid;border-color: #888a85;border-width: 1px;" class="col-md-6 col-md-offset-1" >
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">昵称</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" style="width: 200px;" id="name" value="{$userName}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="myDescription" class="col-sm-2 control-label">自我介绍</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" style="width: 400px;" id="myDescription" maxlength="30" value="{$userDescription}">
+                    </div>
+                </div>
+            </form>
+            <div style="text-align: center">
+                <button class="btn btn-primary" id="changeBase">确认修改</button>
+            </div>
+
+            <form class="form-horizontal" role="form"style="margin-top: 50px;">
+                <div class="form-group">
+                    <label for="originPwd" class="col-sm-2 control-label">原密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" style="width: 200px;" id="originPwd" >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="newPwd" class="col-sm-2 control-label">新密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" style="width: 200px;" id="newPwd">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPwd" class="col-sm-2 control-label">确认新密码</label>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" style="width: 200px;" id="confirmPwd">
+                    </div>
+                </div>
+            </form>
+            <div style="text-align: center">
+                <button class="btn btn-primary" id="changePwd">确认修改</button>
+            </div>
+        </div>
+        <!--<div class="col-md-5" style="text-align: center">-->
+            <!--<img src="{$profileHead}" style="width:200px;height:200px">-->
+            <!--<div style="margin: 10px">-->
+                <!--<button class="btn btn-primary">更换封面</button>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="col-md-1"></div>
+        <div class="col-md-3" style="padding-left:30px;margin-top:30px">
+
+            <!-- Current avatar -->
+            <a href="/changeProfileHeader" target="_blank" title="更换头像">
+                <img src="{$profileHead}" alt="Avatar" style="height:220px;width:220px">
+            </a>
+            <p style="margin-left: 40px;margin-top:15px">
+                点击图片更换头像
+            </p>
+        </div>
+        <footer class="col-md-12" style="height:200px"></footer>
+    </div>
+
+
+</div>
+
+<script>
+    $('#changeBase').click(function () {
+        var name=$('#name').val();
+        var description=$('#myDescription').val();
+        if(name==""){
+            swal('昵称不得为空！','','info');
+            return;
+        }
+        $.ajax({
+            type:'POST',
+            url:"http://www.igallery.com/changeBaseInfo",
+            data:{name:name,description:description},
+            datatype: "json",
+            success:function (data) {
+                if(data['code']==1){
+                    swal(data['msg']);
+                    window.location.reload();
+                }
+                else{
+                    swal(data['msg']);
+                }
+
+            }
+        });
+    })
+
+    $('#changePwd').click(function () {
+        var originPwd=$('#originPwd').val();
+        var newPwd=$('#newPwd').val();
+        var confirmPwd=$('#confirmPwd').val();
+        if(originPwd==""){
+            swal("请输入原密码！");
+            return;
+        }
+        if(newPwd!=confirmPwd){
+            swal("两次密码输入不一致！");
+            return;
+        }
+        $.ajax({
+            type:'POST',
+            url:"http://www.igallery.com/changePwd",
+            data:{originPwd:originPwd,newPwd:newPwd,confirmPwd:confirmPwd},
+            datatype: "json",
+            success:function (data) {
+                if(data['code']==1){
+                    swal(data['msg']);
+                    window.location.reload();
+                }
+                else{
+                    swal(data['msg']);
+                }
+
+            }
+        });
+    })
+</script>
+

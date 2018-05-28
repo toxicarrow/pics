@@ -1,0 +1,136 @@
+{include file="public/head"}
+<body>
+<div class="x-body">
+    <!--<button class="layui-btn  layui-btn-small layui-btn-danger" onclick="delAll()">批量删除</button>-->
+    <button class="layui-btn layui-btn-small "
+            onclick="x_admin_show('添加活动','showAddEvent.html',900,400)"></i>添加活动</button>
+    <button onclick="javascript:location.reload()" class="layui-btn layui-btn-small">刷新</button>
+    <span class="x-right" style="line-height:40px">共有数据:<i class="i_count">{$events->total()}</i>条</span>
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <!--<th>-->
+                <!--<div class="header layui-form-checkbox" lay-skin="primary"><i class="layui-icon">&#xe605;</i></div>-->
+            <!--</th>-->
+            <th>ID</th>
+            <th>开始日期</th>
+            <th>结束日期</th>
+            <th>名称</th>
+            <th>作品数量</th>
+            <th>是否已结束</th>
+        </thead>
+        <tbody>
+
+        {volist name="events" id="vo"}
+        <tr>
+            <!--<td>-->
+                <!--<div class="layui-form-checkbox" lay-skin="primary" data-id='{$vo.id}'><i class="layui-icon">&#xe605;</i></div>-->
+            <!--</td>-->
+            <td>{$vo.id}</td>
+            <td>{$vo.startDate}</td>
+            <td>{$vo.endDate}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.pictureNum}</td>
+            <td><?php if($vo['status']==1) echo '进行中';else echo '已结束' ;?></td>
+            <td>
+
+                <button class="layui-btn layui-btn-mini" onclick="x_admin_show('活动延期','delayTime.html?id={$vo.id}',500,410)">延时</button>
+                <button onclick="endEvent(this,{$vo.id})" class="layui-btn layui-btn-mini layui-btn-danger">结束</button>
+                <button onclick="delEvent(this,{$vo.id})" class="layui-btn layui-btn-mini layui-btn-danger">删除</button>
+            </td>
+        </tr>
+        {/volist}
+
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$events->render()}
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+
+
+    /*用户-停用*/
+    function member_stop(obj,id){
+        layer.confirm('确认要停用吗？',function(index){
+            if($(obj).attr('title')=='启用'){
+                //发异步把用户状态进行更改
+                $(obj).attr('title','停用')
+                $(obj).find('i').html('&#xe62f;');
+
+                $(obj).parents("tr").find(".td-status").find('span').addClass('layui-btn-disabled').html('已停用');
+                layer.msg('已停用!',{icon: 5,time:1000});
+
+            }else{
+                $(obj).attr('title','启用')
+                $(obj).find('i').html('&#xe601;');
+
+                $(obj).parents("tr").find(".td-status").find('span').removeClass('layui-btn-disabled').html('已启用');
+                layer.msg('已启用!',{icon: 5,time:1000});
+            }
+
+        });
+    }
+
+
+    function delEvent(obj,id){
+        var count = $(".i_count")[0].innerText;
+        layer.confirm('确认要删除吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            $.post("/deleteEvent", {id: id}, function(data, textStatus, xhr) {
+                /*optional stuff to do after success */
+                console.log(data);
+                if(data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000},function(){
+                        $(obj).parents('tr').remove();
+                        $(".i_count").html(count-1);
+
+                    });
+                }else{
+                    layer.msg(data.msg,{icon:2,time:1000});
+                }
+
+            });
+        });
+    }
+
+    function endEvent(obj,id){
+        var count = $(".i_count")[0].innerText;
+        layer.confirm('确认要结束活动吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            $.post("/admin/event/endEvent", {id: id}, function(data, textStatus, xhr) {
+                /*optional stuff to do after success */
+                if(data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000},function(){
+//                        $(obj).parents('tr').remove();
+//                        $(".i_count").html(count-1);
+                        console.log(data);
+                        location.reload();
+                    });
+                }else{
+                    layer.msg(data.msg,{icon:2,time:1000});
+                }
+
+            });
+        });
+    }
+
+</script>
+
+{include file="public/foot"}

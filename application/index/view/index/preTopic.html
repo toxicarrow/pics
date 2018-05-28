@@ -1,0 +1,11 @@
+<ul style="list-style-type: none;">
+    {volist name='preList' id='preTopic'}
+    <li style="margin-bottom: 10px;font-size: 17px">
+        <strong>#{$preTopic.topicName}#</strong>
+        <a data-id="{$preTopic.id}" href="#" style="margin-left:10px">
+            <span class="glyphicon glyphicon-thumbs-up"></span>
+        </a>
+        <strong>{$preTopic.thumbUp}</strong>
+    </li>
+    {/volist}
+</ul>

@@ -1,0 +1,140 @@
+<div class="row">
+    <div class="col-md-10 col-sm-10 col-xs-8" style="margin-top: 10px;font-family: Georgia" id="album">
+        {volist name="allAlbum" id="album" }
+        <section data-id="{$album.id}" class="panel panel-info">
+            <header class="panel-heading">
+                <div class="flex">
+                    <h1 class="panel-title" style="font-size: 1.5em">{$album.albumName}</h1>
+                    <button  class="btn btn-primary deleteAlbum" data-id="{$album.id}" style="margin-left:20px"><span class="glyphicon glyphicon-trash"></span></button>
+                    <button  class="btn btn-primary addPicture" data-id="{$album.id}" style="margin-left:20px"><span class="glyphicon glyphicon-plus"></span></button>
+                </div>
+            </header>
+            <main class="panel-body">
+                <div class="justified-gallery" >
+                    {volist name="album['pictures']" id="picture" }
+                    <a href="{$picture.picturePath}" rel="{$album.id}" data-lightbox="the{$album.id}">
+                        <img src="{$picture.picturePath}" alt="{$album.albumName}"/>
+                        <div class="caption" style="text-align: right">
+                            <button  class="btn btn-primary delete" data-id="{$picture.id}"><span class="glyphicon glyphicon-trash"></span></button>
+                        </div>
+                    </a>
+                    {/volist}
+                </div>
+            </main>
+        </section>
+        {/volist}
+        <footer style="height: 200px"></footer>
+    </div>
+    <div class="col-md-2 col-sm-2 col-xs-4" style="margin-top:10px;padding-top: 10px">
+        <button  class="btn btn-primary" id="addAlbum"style="margin-left:20px"><span class="glyphicon glyphicon-plus">添加相册</span></button>
+    </div>
+    <div class="modal fade" id="albumPicture"  tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" style="width:1000px">
+            <div class="modal-content" style="min-height:600px;height:auto!important;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">上传到相册</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form">
+                        <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
+                            <div id="div-video" class="file-loading" style="margin: 0" >
+                                <input id="image" data-id="" class="file" type="file"  name="image[]" multiple data-preview-file-type="any">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="uploadAlbumPicture">发布</button>      -
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#image").fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: 'http://www.igallery.com/albumPicture', //上传的地址
+        allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
+        uploadAsync: false, //默认异步上传
+        showUpload: false, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        browseOnZoneClick: true,
+        showPreview: true, //是否显示预览
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        dropZoneEnabled: true,//是否显示拖拽区域
+        layoutTemplates: {
+            actionUpload: '',//去除上传预览缩略图中的上传图片；
+        },
+        maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        minFileCount: 1,
+        maxFileCount: 10, //表示允许同时上传的最大文件个数
+        enctype: 'multipart/form-data',
+        validateInitialCount: true,
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        uploadExtraData: function () {   //额外参数的关键点
+            var obj = {};
+            obj.albumId = $('#albumPicture').attr('data-id');
+            return obj;
+        }
+    }).on("filebatchuploadsuccess", function (event, data) {
+        swal("上传成功！",'','success');
+        $('#albumPicture').modal('hide');
+        setTimeout('changeToAlbum()',1000);
+//        changeToAlbum();
+    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
+        console.log('文件上传失败！');
+    });
+    $('.delete').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id=$(this).attr('data-id');
+        $.get('/deleteAlbumPic/id/'+id,function (data) {
+            swal("删除成功！",'','info');
+            changeToAlbum();
+        })
+    })
+    $('.deleteAlbum').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var id=$(this).attr('data-id');
+        $.get('/deleteAlbum/id/'+id,function (data) {
+            swal("删除成功！",'','info');
+            changeToAlbum();
+        })
+    })
+    $('#uploadAlbumPicture').click(function () {
+        $('#image').fileinput('upload');
+    })
+    $(".addPicture").click(function (e) {
+        $('#albumPicture').attr('data-id',$(this).attr('data-id'));
+        $('#albumPicture').modal('show');
+    })
+    $("#addAlbum").click(function (e) {
+        swal("Write something here:", {
+            content: "input",
+        })
+            .then((value) => {
+            if(value==""){
+                swal('请输入内容！');
+                return;
+        }
+            $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/newAlbum",
+            data:{albumName:value},
+            datatype: "json",
+            success:function(data){
+                swal(data);
+                changeToAlbum();
+            } ,
+            error: function(){
+            }
+        });
+    });
+    })
+
+</script>

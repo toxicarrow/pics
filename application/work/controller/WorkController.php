@@ -8,6 +8,7 @@
 
 namespace app\work\controller;
 use app\topic\model\HotTopicService;
+use app\work\model\CategoryService;
 use think\Controller;
 use think\Request;
 use think\Db;
@@ -60,6 +61,15 @@ class WorkController extends Controller
         $authorId=$work['authorId'];
         $userName=UserService::getUserById($authorId)['name'];//根据作品信息里用户id得到作者名称
 
+        // 得到作品内所有图片的信息
+        //信息为原图片路径，缩略图路径，缩略图高度和宽度
+        $pictureList=Db::table('work_picture')
+            ->where('articleId',$id)
+            ->select();
+        $user=UserService::getUserById($work['authorId']);
+        $this->assign('list',$pictureList);
+        $this->assign('profilePhoto',$user['profilePhoto']);
+        $this->assign('authorId',$authorId);
         $this->assign('workId',$id);
         $this->assign('thumbUp',$work['thumbUp']);
         $this->assign('category',$work['category']);//摄影类别
@@ -89,13 +99,6 @@ class WorkController extends Controller
         $this->assign('hotTopicList',$hotTopicList);
 
 
-        // 得到作品内所有图片的信息
-        //信息为原图片路径，缩略图路径，缩略图高度和宽度
-        $pictureList=Db::table('work_picture')
-            ->field(['path','thumbPath','thumbWidth','thumbHeight','title'])
-            ->where('articleId',$id)
-            ->select();
-        $this->assign('list',$pictureList);
 
         return $this->fetch();
     }
@@ -180,6 +183,19 @@ class WorkController extends Controller
         }
     }
 
+    public function category($name){
+        $categoryInfo=Db::table('category')
+            ->where('engName',$name)
+            ->select();
+        $znName=$categoryInfo[0]['znName'];
+        $workNum=Db::table('work')
+            ->where('category',$znName)
+            ->count();
+        $this->assign('tagName',$znName);
+        $this->assign('workNum',$workNum);
+        $this->assign('tagPictures',CategoryService::getAllCategoryWork($znName));
+        return $this->fetch("topic@topic/detailTag");
+    }
     /*
      * 根据作品id得到作者id
      */

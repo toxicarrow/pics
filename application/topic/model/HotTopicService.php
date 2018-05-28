@@ -14,7 +14,15 @@ class HotTopicService
     public static function hotTopics($size){
         $result=Db::table('topic')
             ->order('workNum desc')
-            ->limit(5)
+            ->limit($size)
+            ->select();
+        return $result;
+    }
+
+    public static function newTopics($size){
+        $result=Db::table('topic')
+            ->order('date desc')
+            ->limit($size)
             ->select();
         return $result;
     }

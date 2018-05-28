@@ -1,14 +1,13 @@
 {include file="index@index/header"/}
 <link rel="stylesheet" href="__CSS__/workDetail.css">
-<link rel="stylesheet" href="__CSS__/lightbox.css">
 <div class="container" id="workContainer" style="margin-right: 100px">
     <div class="row">
         <section class="col-md-9 col-sm-12" id="work">
             <article class="workMain" id="workMain">
                 <header>
                     <section id="authorInfo">
-                        <img src="__img__/userDefault.jpg" style="width: 4em;height: 4em;border-radius: 50%;float: left">
-                        <strong style="padding:0.5em;float: left;font-size: 1.5em;font-family: 仿宋">{$authorName}</strong>
+                        <img src="{$profilePhoto}" style="width: 4em;height: 4em;border-radius: 50%;float: left">
+                        <a href="/user/{$authorId}" target="_blank"><strong style="padding:0.5em;float: left;font-size: 1.5em;font-family: 仿宋">{$authorName}</strong></a>
                         <button id="follow" style="margin:1em;" class="btn-sm btn btn-info" >+&nbsp;关注</button>
                         <div class="clear"></div>
                     </section>
@@ -21,19 +20,20 @@
                         <p>简介：{$description}</p>
                     </section>
                     <section id="workPicture">
-                        <div id="workGallery" class="justified-gallery" >
+                        <div id="workGallery" class="justified-gallery" style="text-align: center">
                             {volist name="list" id="picture" }
-                            <a href="{$picture.path}" data-lightbox="workPictures" class="workPicture">
-                                <img src="{$picture.path}" alt="{$picture.title}"/>
-                            </a>
+                            <!--<a href="{$picture.path}" data-lightbox="workPictures" class="workPicture">-->
+                                <img src="{$picture.path}" alt="{$picture.title}" style="margin:10px">
+                            <!--</a>-->
                             {/volist}
                         </div>
                     </section>
                 </main>
                 <footer>
-                    <button type="button" class="btn btn-default btn-large" style="margin:1em;font-size: 1.5em;border-radius: 10px;"
+                    <button type="button" class="btn btn-default btn-large like" style="margin:1em;font-size: 1.5em;border-radius: 10px;"
                             aria-label="Left Align">
-                        <span class="glyphicon glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>{$thumbUp}
+                        <span class="glyphicon 	glyphicon-heart-empty" aria-hidden="true" data-id="{$workId}"></span>
+                        <strong data-content="{$thumbUp}">{$thumbUp}</strong>
                     </button>
                 </footer>
             </article>
@@ -42,7 +42,7 @@
                     <div>
                         <ul>
                             {volist name='commentList' id='comment'}
-                            <li> <a href="/userIndex/id/{$comment.reviewerId}"><strong>{$comment.reviewerName}：</strong></a>
+                            <li> <a href="/user/{$comment.reviewerId}"><strong>{$comment.reviewerName}：</strong></a>
                                 <a href="@{$comment.reviewerName}：" class="reply"><small>回复</small></a>
                                 <p>{$comment.review}</p>
                                 <p style="text-align: right"><time datetime="{$comment.time}">{$comment.time} </time></p>
@@ -68,7 +68,7 @@
                 </header>
                 <main class="panel-body">
                     {volist name="workList" id="work" }
-                    <a href="/workDetail/id/{$work.id}" class="list-group-item">
+                    <a href="/workDetail/id/{$work.id}" class="list-group-item" target="_blank">
                         <p>{$work.title}</p>
                     </a>
                     {/volist}
@@ -83,7 +83,7 @@
                 </header>
                 <main class="panel-body">
                     {volist name="hotWorkList" id="hotWork" }
-                    <a href="/workDetail/id/{$hotWork.id}" class="list-group-item">
+                    <a href="/workDetail/id/{$hotWork.id}" class="list-group-item" target="_blank">
                         <p>{$hotWork.title}</p>
                     </a>
                     {/volist}
@@ -100,7 +100,7 @@
                 </header>
                 <main class="panel-body">
                     {volist name="hotTopicList" id="hotTopic" }
-                    <a href="/topicDetail/id/{$hotTopic.id}" class="list-group-item">
+                    <a href="/topic/{$hotTopic.id}" target="_blank" class="list-group-item">
                         <p>{$hotTopic.topicName}</p>
                     </a>
                     {/volist}
@@ -115,8 +115,8 @@
 <footer class="well" style="margin-top:3em;">
 
 </footer>
-<script src="__JS__/jquery.justifiedGallery.min.js"></script>
-<script src="__JS__/lightbox.js"></script>
+<!--<script src="__JS__/jquery.justifiedGallery.min.js"></script>-->
+<!--<script src="__JS__/lightbox.js"></script>-->
 
 <script>
     var authorId;
@@ -131,26 +131,38 @@
         });
     }
 
+    $(function () {
+        $.get('/isLikeWork/work/'+getWorkId(),function(data) {
+            if(data['code']==1){
+                $('.like').find('span').removeClass('glyphicon-heart-empty');
+                $('.like').find('span').addClass('glyphicon-heart');
+            }
+        });
+        $('.like').click(function () {
+            var id=$.cookie('id');
+            if(id==null){
+                swal("请先登录!");
+                return;
+            }
+            //还未点赞
+            if($(this).find('span').hasClass('glyphicon-heart-empty')){
+                //改变样式
+                $(this).find('span').removeClass('glyphicon-heart-empty');
+                $(this).find('span').addClass('glyphicon-heart');
+                $(this).find('strong').text(parseInt($(this).find('strong').text())+1);
+                $.get('/likeWork/work/'+getWorkId(),function(data) {
+                });
+            }
+            else{
+                $(this).find('span').removeClass('glyphicon-heart');
+                $(this).find('span').addClass('glyphicon-heart-empty');
+                $(this).find('strong').text(parseInt($(this).find('strong').text())-1);
+                $.get('/disLikeWork/work/'+getWorkId(),function(data) {
+                });
+            }
 
-//    $(function () {
-//       //根据浏览者是否为当前作品作者更改页面
-//        var id=$.cookie('id');
-//        var workId=getWorkId();
-//        var url="/getAuthorIdByWork/workId/"+workId;
-//        $.get(url,function(data){
-//            authorId=data['authorId'];
-//            if(id==null){
-//                return;
-//            }
-//            else if(id==authorId){
-//                $('#follow').attr('disabled',true);
-//            }
-//        });
-//
-//        //设置回复标签监听
-//        setReplyListener();
-//    });
-
+        })
+    })
     $(function () {
         //设置关注按钮状态，回复标签监听和关注按钮监听
         if(authorId==undefined){
@@ -159,10 +171,7 @@
             var url="/getAuthorIdByWork/workId/"+workId;
             $.get(url,function(data){
                 authorId=data['authorId'];
-                if(id==null){
-                    return;
-                }
-                else if(id==authorId){
+                if(id==authorId){
                     $('#follow').attr('disabled',true);
                 }
                 setFollowButton();
@@ -252,18 +261,18 @@
             });
         });
     });
-$("#workGallery").justifiedGallery({
-    rowHeight : 300,
-    margins : 3,
-//    waitThumbnailsLoad : false
-});
-lightbox.option({
-    'resizeDuration': 200,
-    'wrapAround': true,
-    wrapAround:true,
-    positionFromTop:50,
-    resizeDuration:300,
-})
+//$("#workGallery").justifiedGallery({
+//    rowHeight : 300,
+//    margins : 3,
+////    waitThumbnailsLoad : false
+//});
+//lightbox.option({
+//    'resizeDuration': 200,
+//    'wrapAround': true,
+//    wrapAround:true,
+//    positionFromTop:50,
+//    resizeDuration:300,
+//})
 
 $(function()
 {

@@ -1,0 +1,50 @@
+
+<div style="background-color: white;">
+    <div style="width:70%;margin-left:15%;padding-top: 20px" id="videoContainer">
+        {volist name="videoList" id="video"}
+        <section class="videoBox" style="margin-bottom:20px;border-bottom: solid;border-width: 1px;border-color: #a8a8a8;padding-bottom:10px">
+            <main style="text-align: right">
+                <video width="90%" height="100%" controls>
+                    <source src="{$video.path}">
+                </video>
+                <!--<video id="media" src="{$video.path}" width="90%">您的浏览器不支持video</video>-->
+            </main>
+            <footer>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-default btn-large like">
+                        <span data-id="{$video.id}" class="glyphicon {$video.likeStyle}"></span>
+                        <strong>{$video.thumbUp}</strong>
+                    </button>
+
+                </div>
+            </footer>
+        </section>
+        {/volist}
+    </div>
+
+</div>
+<script>
+    $('.like').click(function () {
+        var id=$.cookie('id');
+        if(id==null){
+            swal("请先登录!");
+            return;
+        }
+        //还未点赞
+        if($(this).find('span').hasClass('glyphicon-heart-empty')){
+            //改变样式
+            $(this).find('span').removeClass('glyphicon-heart-empty');
+            $(this).find('span').addClass('glyphicon-heart');
+            $(this).find('strong').text(parseInt($(this).find('strong').text())+1);
+            $.get('/likeVideo/video/'+$(this).find('span').attr('data-id'),function(data) {
+            });
+        }
+        else{
+            $(this).find('span').removeClass('glyphicon-heart');
+            $(this).find('span').addClass('glyphicon-heart-empty');
+            $(this).find('strong').text(parseInt($(this).find('strong').text())-1);
+            $.get('/disLikeVideo/video/'+$(this).find('span').attr('data-id'),function(data) {
+            });
+        }
+    })
+</script>

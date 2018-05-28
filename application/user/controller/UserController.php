@@ -7,6 +7,7 @@
  */
 
 namespace app\user\controller;
+use app\user\model\User;
 use think\Controller;
 use think\Request;
 use app\common\Util;
@@ -26,6 +27,8 @@ class userController extends Controller
             return json($msg);
         }
         $verify = VerifyController::verify($phone,$request->param("code"));
+//        $msg['msg']=$verify;
+//        return json($msg);
         if($verify==false){
             $msg['msg']= "手机号或验证码错误";
             return json($msg);
@@ -35,9 +38,22 @@ class userController extends Controller
             $salt = Util::getRandChar(10);
             $safePwd = sha1(sha1($pwd).$salt);
 
-            $result = UserService::addUser($name, $phone, $safePwd,$salt);
+            $user=new User;
+            $user->name=$name;
+            $user->phone=$phone;
+            $user->salt=$salt;
+            $user->password=$safePwd;
+            $user->profilePhoto='/static/img/userDefault.jpg';
+            $user->bgImg='http://www.igallery.com/static/img/userbg01.jpg';
+            $user->time=date('Y-m-d');
+            $user->save();
+
             $msg['code']= 200;
             $msg['msg']= "注册成功！";
+            $user=UserService::getUserByPhone($phone);
+            $userId=$user['id'];
+            $msg['id']=$userId;
+            $msg['name']=$name;
             return json($msg);
         }
         else{
@@ -53,45 +69,62 @@ class userController extends Controller
         //return $isVerifyWay;
         $phone = $request->param("phone");
         $user = UserService::getUserByPhone($phone);
-        if($user==false){
-            return "手机号错误！";
-        }
-        if($isVerifyWay=='true'){
-            $verify = VerifyController::verify($phone,$request->param("code"));
-            //验证码验证成功,成功登录
-            if($verify==false){
-                $msg['msg']= "验证码错误或失效";
-            }
-            else if($verify['code']==200){
-                Session::set('user_name',$user->name);
-                Session::set('user_name',$user->id);
-                $msg['msg']= "注册成功";
-            }
-            else{
-                $msg['msg']= "验证失败";
-            }
-            return json($msg);
-        }
-        else{
-            $pwd = $request->param("password");
-            $salt = $user->salt;
-            $rightPwd = $user->password;
-            $currentPwd = sha1(sha1($pwd).$salt);
-            $msg=array();
-            if($currentPwd==$rightPwd){
+//        if($user==false){
+//            $msg['code']=0;
+//            $msg['msg']= "手机号错误";
+//            return json($msg);
+//        }
+//        if($isVerifyWay==1){
+//            $verify = VerifyController::verify($phone,$request->param("code"));
+////            return json($verify);
+//            //验证码验证成功,成功登录
+//            if($verify['code']==404){
+//                $msg['code']=0;
+//                $msg['msg']= "不存在验证码或手机号";
+//            }
+//            else if($verify['code']==200){
+//                $msg['code']=1;
+//                $msg['id']=$user['id'];
+//                $msg['name']=$user['name'];
+//                Session::set('user_name',$user->name);
+//                Session::set('user_id',$user->id);
+//                $msg['msg']= "登录成功";
+//            }
+//            else{
+//                $msg['code']=0;
+//                $msg['msg']= "验证码错误";
+//            }
+
+                $msg['code']=1;
+                $msg['id']=$user['id'];
+                $msg['name']=$user['name'];
                 Session::set('user_name',$user->name);
                 Session::set('user_id',$user->id);
-                $msg['msg']='登录成功';
-                $msg['id']=$user->id;
-                $msg['name']=$user->name;
-            }
-            else{
-                $msg['msg']='用户名或密码错误';
-            }
-            return json($msg);
-
+                $msg['msg']= "登录成功";
+                return json($msg);
         }
-    }
+//        else{
+//            $pwd = $request->param("password");
+//            $salt = $user->salt;
+//            $rightPwd = $user->password;
+//            $currentPwd = sha1(sha1($pwd).$salt);
+//            $msg=array();
+//            if($currentPwd==$rightPwd){
+//                Session::set('user_name',$user->name);
+//                Session::set('user_id',$user->id);
+//                $msg['msg']='登录成功';
+//                $msg['id']=$user->id;
+//                $msg['name']=$user->name;
+//                $msg['code']=1;
+//            }
+//            else{
+//                $msg['msg']='用户名或密码错误';
+//                $msg['code']=0;
+//            }
+//            return json($msg);
+//
+//        }
+//    }
 
     public function test(Request $request){
         $name = $request->param("name");
@@ -99,13 +132,13 @@ class userController extends Controller
     }
 
     public function logout(Request $request){
-        if(Session::has('user_name')){
-            Session::delete('user_name');
-            Session::set('user_id');
-            return $this->fetch();
+        if(Session::has('user_id')){
+            Session::set('user_name',null);
+            Session::set('user_id',null);
+            return json('登出');
         }
         else{
-            return "账号未登录";
+            return json("账号未登录");
         }
 
     }

@@ -1,2 +1,137 @@
 {include file="index/header"/}
-<section></section>
+<div class="container" style="width: 80%;padding-top: 3.5em">
+    <div class="row" style="margin-left:20px;margin-right:20px;">
+        <section class="col-md-6 col-sm-9 col-xs-12"style="background-color: white;box-shadow:10px 10px 5px #888888;">
+            <section id="allTopics">
+                <header>
+                    <section class="flex">
+                        <h2>所有话题</h2>
+                        <!--<p style="margin-left: 50px;margin-top: 30px">-->
+                        <!--<a href="#">最热</a>-->
+                        <!--</p>-->
+                        <!--<p style="margin-left: 15px;margin-top: 30px">-->
+                        <!--<a href="#">最新</a>-->
+                        <!--</p>-->
+                    </section>
+                </header>
+                <main style="text-align: center;" id="topicMain">
+                    <div >
+                        <ul style="list-style-type: none;" id="topics">
+                            {volist name='topicList' id='topic'}
+                            <li style="margin-bottom: 10px;font-size: 17px">
+                                <a href="/topic/{$topic.id}.html" data-type="all"><strong>#{$topic.topicName}#</strong></a>
+                            </li>
+                            {/volist}
+                        </ul>
+                    </div>
+                    {$topicList->render()}
+                </main>
+                <footer>
+                    <div class="input-group" style="margin-left: 30%;width:40%;margin-bottom:15px">
+                        <input type="text" class="form-control" id="searchText" placeholder="搜索话题" >
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" id="searchTopic" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                        </span>
+                    </div>
+                    <section class="bottomBorder">
+                        <main style="min-height:200px;text-align: center" id="searchResult" >
+                            <div class="list-group asideGroup" style="width:50%;margin-left: 25%">
+
+                            </div>
+                        </main>
+                    </section>
+                </footer>
+            </section>
+
+        </section>
+        <div class="col-md-1 hidden-sm hidden-xs"></div>
+        <section id="other"class="col-md-4 col-sm-9 col-xs-12">
+            <section id="hotTopic" class=" panel panel-danger">
+                <header class="panel-heading">
+                    <h3 class="panel-title">
+                        热门话题
+                    </h3>
+                </header>
+                <main class="panel-body">
+                    {volist name="hotTopicList" id="hotTopic" }
+                    <a href="/topic/{$hotTopic.id}.html" target="_blank" class="list-group-item">
+                        <p>{$hotTopic.topicName}</p>
+                    </a>
+                    {/volist}
+                </main>
+                <footer class="panel-footer">
+
+                </footer>
+            </section>
+            <section id="newTopic" class=" panel panel-danger">
+                <header class="panel-heading">
+                    <h3 class="panel-title">
+                        最新话题
+                    </h3>
+                </header>
+                <main class="panel-body">
+                    {volist name="newTopicList" id="newTopic" }
+                    <a href="/topic/{$newTopic.id}.html" target="_blank" class="list-group-item">
+                        <p>{$newTopic.topicName}</p>
+                    </a>
+                    {/volist}
+                </main>
+                <footer class="panel-footer">
+
+                </footer>
+            </section>
+        </section>
+    </div>
+</div>
+<script>
+    $('#searchTopic').click(function () {
+        var text=$('#searchText').val();
+        if(text==""){
+            swal("请输入搜索内容！");
+            return;
+        }
+        $('.asideGroup').html("");
+        $.ajax({
+            type:"POST",
+            url:"http://www.igallery.com/searchTopic",
+            data:{q:text},
+            datatype: "json",//"xml", "html", "script", "json", "jsonp", "text".
+            success:function(data){
+                for(var o in data){
+                    var tHref='/topic/'+data[o].id;
+                    $('.asideGroup').append("<a class='list-group-item'" +"href='"+tHref+"'"+
+                        ">" +
+                        "<p class='list-group-item-heading'>"+data[o].text+
+                        "</p></a>")
+                }
+                if(data.length==0)
+                    $('.asideGroup').append("<p>搜索不到结果</p>")
+                console.log(data);
+            }
+        });
+
+    })
+    $("#topicMain .pagination a").click(function() {
+        //回复的click
+        var page = $(this).attr("href");
+        getPage(page);
+        //禁止A标签跳转
+        return false;
+    });
+    function getPage(url) {
+        $.get(url, function (data, status) {
+            $("#topicMain").html(data);
+
+            //ajax局部刷新后，需要重新绑定！！！
+            $("#topicMain .pagination a").click(function () {
+                console.log("click");
+                var page = $(this).attr("href");
+                getPage(page);
+                //禁止A标签跳转
+                return false;
+            });
+            setReplyListener();
+        });
+    }
+
+</script>

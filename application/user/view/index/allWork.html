@@ -1,0 +1,7 @@
+<div id="workGallery" class="justified-gallery" style="background-color: white">
+    {volist name="allPictures" id="picture" }
+    <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}">
+        <img src="{$picture.thumbPath}" alt="{$picture.title}"/>
+    </a>
+    {/volist}
+</div>

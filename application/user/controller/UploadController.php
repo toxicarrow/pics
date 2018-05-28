@@ -25,10 +25,10 @@ class UploadController extends Controller {
         $files = $request->file('image');
         $id=$request->session("user_id");
         if($id==null){
-            $msg=array();
-            $msg['msg']="请先登录！";
-            return json($msg);
-        }
+        $msg=array();
+        $msg['msg']="请先登录！";
+        return json($msg);
+    }
 
 //        $pictureIds = [];
 //        $firstPictureId=$pictureIds[0];

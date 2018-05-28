@@ -1,0 +1,10 @@
+<div >
+    <ul style="list-style-type: none;">
+        {volist name='topicList' id='topic'}
+        <li style="margin-bottom: 10px;font-size: 17px">
+            <a href="/topic/{$topic.id}"><strong>#{$topic.topicName}#</strong></a>
+        </li>
+        {/volist}
+    </ul>
+</div>
+{$topicList->render()}

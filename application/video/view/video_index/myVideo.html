@@ -1,0 +1,23 @@
+<div style="background-color: white">
+    <div style="width:70%;margin-left:15%;padding-top: 20px" id="videoContainer">
+        {volist name="videoList" id="video"}
+        <section class="videoBox" style="margin-bottom:20px;border-bottom: solid;border-width: 1px;border-color: #a8a8a8;padding-bottom:10px">
+            <main style="text-align: right">
+                <video width="90%" height="100%" controls>
+                    <source src="{$video.path}">
+                </video>
+                <!--<video id="media" src="{$video.path}" width="90%">您的浏览器不支持video</video>-->
+            </main>
+            <footer>
+                <div style="text-align: right;">
+                    <span class="glyphicon glyphicon-heart-empty" style="font-size: 25px"></span>&nbsp;{$video.thumbUp}
+                    <a href="#" data-id="{$video.id}" class='deleteVideo'style="margin-left:15px">
+                        <span class="glyphicon glyphicon-trash" style="font-size: 25px"></span>
+                    </a>
+                </div>
+            </footer>
+        </section>
+        {/volist}
+    </div>
+
+</div>

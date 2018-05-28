@@ -8,7 +8,9 @@
 
 namespace app\user\model\service;
 use app\user\model\User;
+use app\work\model\WorkService;
 use think\Db;
+use think\Session;
 
 class UserService
 {
@@ -62,6 +64,19 @@ class UserService
 
     }
 
+    public static function isLikeWork($id,$workId){
+        $results=Db::table('work_like')
+            ->where([
+                'workId'=>$workId,
+                'userId'=>$id,
+            ])
+            ->select();
+        if(sizeof($results)==0)
+            return 0;
+        else
+            return 1;
+
+    }
     public static function updateUser($info)
     {
 
@@ -96,5 +111,74 @@ class UserService
 
         return $user;
 
+    }
+
+    public static function isFollow($id,$currentId){
+        $isFollow=Db::table('follower')
+            ->where([
+                'id'=>$id,
+                'follower'=>$currentId,
+                ])
+            ->select();
+        if(sizeof($isFollow)==0){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    /**
+     * @param $id
+     * 我关注的所有人
+     */
+    public static function allFollowings($id){
+        $followings = Db::table('follower')
+            ->where('follower',$id)
+            ->select();
+
+        $result=array();
+        $currentId=Session::get('user_id');
+        foreach ($followings as $following){
+            $user=self::userInfo($following['id']);
+            if($currentId==null){
+                $user['follow']='关注';
+            }
+            else if(self::isFollow($following['id'],$currentId)){
+                $user['follow']='已关注';
+            }
+            else{
+                $user['follow']='关注';
+            }
+            $result[]=$user;
+        }
+        return $result;
+    }
+
+    /**
+     * @param $id
+     * 所有关注我的人
+     * 数据里包含该用户的头像，背景图片，关注人数，粉丝人数，作品数量以及用户基本信息
+     */
+    public static function allFollowers($id){
+        $followings = Db::table('follower')
+            ->where('id',$id)
+            ->select();
+
+        $result=array();
+        $currentId=Session::get('user_id');
+        foreach ($followings as $following){
+            $user=self::userInfo($following['follower']);
+            if($currentId==null){
+                $user['follow']='关注';
+            }
+            else if(self::isFollow($user['id'],$currentId)){
+                $user['follow']='已关注';
+            }
+            else{
+                $user['follow']='关注';
+            }
+            $result[]=$user;
+        }
+        return $result;
     }
 }

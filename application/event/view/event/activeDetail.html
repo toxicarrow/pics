@@ -1,0 +1,173 @@
+{include file="index@index/header"/}
+{volist name="event" id="vo"}
+<img src="{$vo.eventPost}" style="width:100%">
+<div class="row" style="margin-top:15px;height:250px">
+    <section class="col-md-8 col-sm-6 col-xs-5;" style="background-color: white;height:250px;margin-left: 5%">
+        <header style="padding-top: 20px;padding-left: 15px;height: 50px">
+            <p class="pageTitle" style="font-size: 30px">介绍</p>
+        </header>
+        <main style="padding-left: 15px;">
+            <p style="margin-top:50px">{$vo.description}</p>
+        </main>
+    </section>
+    <section class="col-md-3 col-sm-5 col-xs-6" style="margin-left:10px;background-color: white;height:250px;text-align: center">
+        <header style="padding-top: 20px;padding-left: 15px;height: 50px">
+            <h2>{$vo.name}</h2>
+            </br>
+            <p>开始日期：{$vo.startDate}</br></p>
+            <p>结束日期：{$vo.endDate}</br></p>
+            <p>作品数量：{$vo.pictureNum}</br></p>
+            <button id="join"data-id="{$vo.id}" class="btn btn-primary btn-large" style="letter-spacing: 10px;margin-top:20px">我要参加</button>
+        </header>
+    </section>
+</div>
+{/volist}
+<section id="allPicture" style="width: 94%;margin-left: 4%;background-color: white;margin-top:15px">
+    <header style="padding-top: 20px;padding-left: 15px;height: 80px">
+        <p class="pageTitle" style="font-size: 40px">所有作品</p>
+    </header>
+    <main class="justified-gallery">
+            {volist name="pictures" id="picture"}
+            <a href="{$picture.path}" rel="allPictures" data-lightbox="allPictures">
+                <img src="{$picture.thumbPath}" alt="{$picture.title}"/>
+                <div class="caption" style="text-align: right">
+                    <strong style="margin-right: 20px">{$picture.title}</strong>
+                    <button  class="btn btn-primary like" data-id="{$picture.id}">
+                        <span class="glyphicon {$picture.likeStyle}" style="font-size: 20px"></span>&nbsp;
+                        <strong>{$picture.thumbUp}</strong>
+                    </button>
+                </div>
+            </a>
+            {/volist}
+    </main>
+    <footer style="height:200px">
+
+    </footer>
+</section>
+<div class="modal fade" id="eventModal"  role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content" style="min-height:600px;height:auto!important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">参加活动</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="eventTitle" class="col-sm-2 control-label">标题*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 200px;" id="eventTitle" placeholder="请输入标题(不超过10字）">
+                        </div>
+                    </div>
+                    <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
+                        <div id="div-file" class="file-loading" style="margin: 0" >
+                            <input id="eventImage" class="file" type="file"  name="image" multiple data-preview-file-type="any">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="uploadEventPicture">发布</button>      -
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script src="__JS__/lightbox.js"></script>
+<script>
+
+    $('.like').click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();//阻止冒泡
+        var id=$.cookie('id');
+        if(id==null){
+            swal("请先登录!");
+            return;
+        }
+        //还未点赞
+        if($(this).find('span').hasClass('glyphicon-heart-empty')){
+            //改变样式
+            $(this).find('span').removeClass('glyphicon-heart-empty');
+            $(this).find('span').addClass('glyphicon-heart');
+            $(this).find('strong').text(parseInt($(this).find('strong').text())+1);
+            $.get('/likeEventPic/picture/'+$(this).attr('data-id'),function(data) {
+            });
+        }
+        else{
+            $(this).find('span').removeClass('glyphicon-heart');
+            $(this).find('span').addClass('glyphicon-heart-empty');
+            $(this).find('strong').text(parseInt($(this).find('strong').text())-1);
+            $.get('/disLikeEventPic/picture/'+$(this).attr('data-id'),function(data) {
+            });
+        }
+    })
+    $("#join").click(function () {
+        var id=$.cookie('id');
+        if(id==null){
+            swal('请先登录！','','info');
+            return;
+        }
+        $('#eventModal').modal('show');
+    });
+    $("#eventImage").fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: 'http://www.igallery.com/eventPicture', //上传的地址
+        allowedFileExtensions : ['jpg', 'gif', 'png', 'jpeg'],
+        uploadAsync: false, //默认异步上传
+        showUpload: false, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        browseOnZoneClick: true,
+        showPreview: true, //是否显示预览
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        dropZoneEnabled: true,//是否显示拖拽区域
+        layoutTemplates: {
+            actionUpload: '',//去除上传预览缩略图中的上传图片；
+            actionDelete: '',
+        },
+        maxFilePreviewSize:0,
+        allowedFileTypes:[ 'image'],
+        maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        validateInitialCount: true,
+        maxFileCount:1,
+        minFileCount:1,
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "只能上传一张图片！",
+        uploadExtraData: function () {   //额外参数的关键点
+            var obj = {};
+            obj.eventId=$("#join").attr('data-id');
+            obj.title = $('#eventTitle').val();
+            return obj;
+        }
+    }).on("filebatchuploadsuccess", function (data) {
+        swal("成功发布图片");
+        window.location.reload();
+    }).on('filebatcherror', function(event, data, msg) {
+        console.log('图片上传失败！');
+    });
+
+    function clearEventModal(){
+        console.log("clear");
+        $('#eventTitle').val("");
+        $("#eventImage").fileinput('clear'); //重置上传控件（清空已文件）
+    }
+    $('#uploadEventPicture').click(function () {
+        console.log('upload');
+        if($('#eventTitle').val()==""){
+            swal("请填入信息！",'标题必须要填写','info');
+            return;
+        }
+        $("#eventImage").fileinput('upload');
+    });
+
+    $('#eventModal').on('hidden.bs.modal', function () {
+        clearEventModal();
+    });
+
+    $(".justified-gallery").justifiedGallery({
+        rowHeight : 200,
+        margins : 3,
+    });
+
+</script>

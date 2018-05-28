@@ -1,0 +1,19 @@
+<div style="margin-top: 10px;font-family: Georgia;width: 80%;margin-left:5%" id="album">
+    {volist name="allAlbum" id="album" }
+    <section data-id="{$album.id}" class="panel panel-info">
+        <header class="panel-heading">
+            <h1 class="panel-title" style="font-size: 1.5em">{$album.albumName}</h1>
+        </header>
+        <main class="panel-body">
+            <div class="justified-gallery" >
+                {volist name="album['pictures']" id="picture" }
+                <a href="{$picture.picturePath}" rel="{$album.id}" data-lightbox="the{$album.id}">
+                    <img src="{$picture.picturePath}" alt="{$album.albumName}"/>
+                </a>
+                {/volist}
+            </div>
+        </main>
+    </section>
+    {/volist}
+    <footer style="height: 200px"></footer>
+</div>

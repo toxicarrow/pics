@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！-->
     <link rel="icon" href="__img__/camera.jpg" type="image/x-icon">
-    <title>pics——享受美的瞬间</title>
+    <title>IGalleay——摄影人生</title>
 
     <link rel="stylesheet" href="__CSS__/bootstrap.min.css">
     <link rel="stylesheet" href="__CSS__/common.css">
@@ -17,16 +17,16 @@
     <link href="__CSS__/select2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="__CSS__/jquery-ui.css">
     <link rel="stylesheet" href="__CSS__/jquery-ui.structure.css">
+    <link href="__CSS__/lightbox.css" rel="stylesheet">
     <style type="text/css">
         html, body {width:100%;height:100%;}
-        .bg{background-image: url(http://www.igallery.com/static/img/userbg01.jpg);hright:240px;margin-top: 1px}
         .bgWhite{background-color: #FFFFFF;}
         .main{padding-top: 30px}
         .bgColor{background-color:	#F0F0F0 }
     </style>
 
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <!--<script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>-->
+    <!--<script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>-->
 
 </head>
 <body class="bgColor">
@@ -46,22 +46,99 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/exploreIndex">发现</a></li>
-                    <li><a href="#">我的关注</a></li>
+                    <li><a href="#" id="myFollow">我的关注</a></li>
                     <li><a href="/topicIndex">话题</a></li>
-                    <li><a href="/eventIndex">活动</a></li>
+                    <li><a href="/videoIndex">短视频</a></li>
+                    <li><a href="/activeEvent">活动</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li id="navLog" style="display: none"><a data-toggle="modal" href="#loginModal">登录/注册</a></li>
                     <li id="navPhoto" style="display: none;">
-                        <a href="#>" style="margin: 10px;padding: 0"><img style="border-radius: 50%;" src="__img__/userDefault.jpg" class="navPhoto"></a>
+                        <a href="#" id="userHref" style="margin: 10px;padding: 0"><img id="userPhoto" style="border-radius: 50%;" src="__img__/userDefault.jpg" class="navPhoto"></a>
                     </li>
+                    <button id="share" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">我想<span class="caret"></span></button>
+                    <ul class="dropdown-menu" role="menu" id="action"style="margin-right: 100px">
+                        <li>
+                            <a href="#pictureDetail" data-toggle="modal">发布作品</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#videoUpload" data-toggle="modal">分享短视频</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" id="editInfo">编辑资料</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#" id="logout">登出</a>
+                        </li>
+                    </ul>
                 </ul>
             </div>
 
         </div>
     </header>
 </div>
+<div class="modal fade" id="pictureDetail"  role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content" style="min-height:600px;height:auto!important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">分享新的作品</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="title" class="col-sm-2 control-label">标题*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 200px;" id="title" placeholder="请输入标题(不超过10字）">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-sm-2 control-label">简要描述*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 400px;" id="description" maxlength="30" placeholder="请输入简要描述（不超过30字）">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="workCategory" class="col-sm-2 control-label">摄影类别*</label>
+                        <div class="col-sm-10">
+                            <select id="workCategory">
+                                <option value="人物">人物</option>
+                                <option value="生态">生态</option>
+                                <option value="艺术">艺术</option>
+                                <option value="宠物">宠物</option>
+                                <option value="商业">商业</option>
+                                <option value="概念">概念</option>
+                                <option value="风景">风景</option>
+                                <option value="纪实">纪实</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label for="workTopic" class="col-sm-2 control-label">摄影话题</label>
+                        <div class="col-sm-10">
+                            <select id="workTopic">
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
+                        <div id="div-file" class="file-loading" style="margin: 0" >
+                            <input id="file" class="file" type="file"  name="image[]" multiple data-preview-file-type="any">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="upload">发布</button>      -
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="loginModal"  tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog" style="width: 400px">
         <div class="modal-content">
@@ -131,7 +208,7 @@
                                 <label for="code" class="control-label col-sm-offset-1 col-sm-3">验证码</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" style="width: 120px;float: left" id="code" placeholder="验证码">
-                                    <a id="verification" href="#"  style="float: left;margin: 15px;">
+                                    <a class="verification" href="#"  style="float: left;margin: 15px;">
                                         <small>发送</small>
                                     </a>
                                     <div class="clear" ></div>
@@ -152,14 +229,248 @@
 
     </div>
 </div>
-
-<script src="__JS__/jquery-3.2.1.min.js"></script>>
+<div class="modal fade" id="videoUpload"  tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog" style="width:1000px">
+        <div class="modal-content" style="min-height:600px;height:auto!important;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">分享新的短视频</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="videoTitle" class="col-sm-2 control-label">标题*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 200px;" id="videoTitle" placeholder="请输入标题(不超过10字）">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDescription" class="col-sm-2 control-label">简要描述*</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" style="width: 400px;" id="videoDescription" maxlength="30" placeholder="请输入简要描述（不超过30字）">
+                        </div>
+                    </div>
+                    <div class="form-group"  style="padding-left: 40px;padding-right: 40px;">
+                        <div id="div-video" class="file-loading" style="margin: 0" >
+                            <input id="video" class="file" type="file"  name="video" data-preview-file-type="any">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" id="uploadVideo">发布</button>      -
+            </div>
+        </div>
+    </div>
+</div>
+<script src="__JS__/jquery-3.2.1.min.js"></script>
 <script src="__JS__/bootstrap.min.js"></script>
-<script src="__JS__/jquery-ui.min.js"></script>
 <script src="__JS__/jquery.cookie.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="__JS__/myPageHeader.js"></script>
+<script src="__JS__/fileinput.min.js"></script>
+<script src="__JS__/zh.js"></script>
+<script src="__JS__/select2.min.js"></script>
 
 
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $('#workCategory').select2({
+            language: "zh-CN",  //设置 提示语言
+            width: "150px", //设置下拉框的宽度
+        });
+        $('#myFollow').click(function (e) {
+            e.preventDefault();
+            if($.cookie('id')==null){
+                swal("请先登录","",'info');
+            }
+            else{
+                window.location.href = "/followingWork/page/1";
+            }
+        });
+        $('#workTopic').select2({
+            language: "zh-CN",  //设置 提示语言
+            width: "300px", //设置下拉框的宽度
+
+            ajax: {
+                url: "http://www.igallery.com/searchTopic",
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, // search term
+                    };
+                },
+                processResults: function (data, params) {
+                    params.page = params.page || 1;
+                    //console.log(data.items);
+                    return {
+                        results: data,
+                    };
+                },
+                cache: true
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            minimumInputLength: 1,
+            placeholder: "请选择",
+            tags: false,  //设置必须存在的选项 才能选中
+            templateResult: function (repo) { //搜索到结果返回后执行，可以控制下拉选项的样式
+                if (repo.loading) return repo.text;
+                var markup = "<div class=''>" + repo.text + "</div>";
+                return markup;
+            }
+        });
+    });
+
+    $('#pictureDetail').on('show.bs.modal', function (e) {
+        $(document.body).css({
+            "overflow-x":"hidden",
+            "overflow-y":"hidden"
+        });
+    })
+    $('#pictureDetail').on('hidden.bs.modal', function () {
+        clearModal();
+        $(document.body).css({
+            "overflow-x":"auto",
+            "overflow-y":"auto"
+        });
+    });
+    //上传
+    $(document).ready(function () {
+        $('#upload').click(function () {
+            if($('#title').val()==""||$('#workCategory').val()==""||$('#description').val()==""){
+                swal("请填入信息！",'除了话题都是必填信息','info');
+                return;
+            }
+            console.log('upload');
+            $("#file").fileinput('upload');
+        });
+    });
+
+
+    //页面加载完毕，调用初始化上传图片插件的函数
+
+    function clearModal(){
+        console.log("clear");
+        $('#title').val("");
+        $('#description').val("");
+        $("#file").fileinput('clear'); //重置上传控件（清空已文件）
+    }
+    //初始化图片插件
+    $("#file").fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: 'http://www.igallery.com/uploadWork', //上传的地址
+        allowedFileExtensions: ['jpg', 'gif', 'png', 'jpeg'],//接收的文件后缀
+        uploadAsync: false, //默认异步上传
+        showUpload: false, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        browseOnZoneClick: true,
+        showPreview: true, //是否显示预览
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        dropZoneEnabled: true,//是否显示拖拽区域
+        layoutTemplates: {
+            actionUpload: '',//去除上传预览缩略图中的上传图片；
+        },
+        maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        minFileCount: 1,
+        maxFileCount: 10, //表示允许同时上传的最大文件个数
+        enctype: 'multipart/form-data',
+        validateInitialCount: true,
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "选择上传的文件数量({n}) 超过允许的最大数值{m}！",
+        uploadExtraData: function () {   //额外参数的关键点
+            //TODO
+            var obj = {};
+            obj.title = $('#title').val();
+            obj.category = $('#workCategory').val();
+            obj.topicId = $('#workTopic').val();
+            obj.description = $('#description').val();
+            return obj;
+        }
+    }).on("filebatchuploadsuccess", function (event, data) {
+        swal("上传成功！",'','success');
+        $('#pictureDetail').modal('hide');
+    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
+        console.log('文件上传失败！');
+    });
+
+    //初始化短视频插件
+    $("#video").fileinput({
+        language: 'zh', //设置语言
+        uploadUrl: 'http://www.igallery.com/uploadVideo', //上传的地址
+        allowedFileExtensions : ['flv', 'swf', 'mkv', 'avi', 'rm', 'rmvb', 'mpg', 'ogg', 'ogv', 'mov', 'wmv', 'mp4', 'webm'],
+        uploadAsync: false, //默认异步上传
+        showUpload: false, //是否显示上传按钮
+        showRemove: true, //显示移除按钮
+        browseOnZoneClick: true,
+        showPreview: true, //是否显示预览
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        dropZoneEnabled: true,//是否显示拖拽区域
+        layoutTemplates: {
+            actionUpload: '',//去除上传预览缩略图中的上传图片；
+            actionDelete: '',//去除上传预览缩略图中的上传图片；
+        },
+        maxFilePreviewSize:0,
+        allowedFileTypes:[ 'video'],
+        maxFileSize: 0,//单位为kb，如果为0表示不限制文件大小
+        validateInitialCount: true,
+        maxFileCount:1,
+        minFileCount:1,
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+        msgFilesTooMany: "只能上传一个文件！",
+        uploadExtraData: function () {   //额外参数的关键点
+            //TODO
+            var obj = {};
+            obj.title = $('#videoTitle').val();
+            obj.description = $('#videoDescription').val();
+            return obj;
+        }
+    }).on("filebatchuploadsuccess", function (data) {
+        swal("上传成功！",'','success');
+        $('#videoUpload').modal('hide')
+    }).on('filebatcherror', function(event, data, msg) {  //一个文件上传失败
+        console.log('文件上传失败！');
+    });
+
+
+    $('#uploadVideo').click(function () {
+        console.log('upload');
+        if($('#videoTitle').val()==""||$('#videoDescription').val()==""){
+            swal("请填入信息！",'标题和描述必须要填写','info');
+            return;
+        }
+        $("#video").fileinput('upload');
+    });
+
+    $('#videoUpload').on('hidden.bs.modal', function () {
+        $('#videoTitle').val("");
+        $('#videoDescription').val("");
+        $("#video").fileinput('clear');
+    });
+
+
+    $(document).ready(function () {
+        var id=$.cookie('id');
+        if(id==null){
+            $("#navLog").show();
+        }
+        else{
+            $("#navLog").hide();
+            $.get('/userPhoto',function (data) {
+                $path=data['path'];
+                $('#userPhoto').attr('src',$path);
+            })
+            $("#navPhoto").show();
+            $("#share").show();
+            $("#userHref").attr('href','/user/'+$.cookie('id'));
+            $('#editInfo').attr('href','/editInfo/id/'+$.cookie('id'));
+        }
+    });
+</script>

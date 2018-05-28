@@ -1,0 +1,29 @@
+<div style="margin-top: 10px;font-family: Georgia" id="following">
+{volist name="allUsers" id="user" }
+<section class="follow-section" style="float: left;width: 370px;background-color: white;margin: 10px">
+    <div style="width: 100%;height:100px;background-image: url({$user.bgImg});background-size:cover"></div>
+    <section class="follow-body" style="padding-left: 20px">
+        <div class="row" style="height:90px">
+            <section class="col-md-2" style="padding:10px">
+                <a href="/user/{$user.id}">
+                    <img src="{$user.profilePhoto}" style="width:50px;height:50px;border-radius: 50%"/>
+                </a>
+            </section>
+            <section class="col-md-5" style="padding-top:40px">
+                <a href="/user/{$user.id}">
+                    <strong>{$user.name}</strong>
+                </a>
+            </section>
+            <section class="col-md-4" style="text-align: right;padding: 20px">
+                <button class="btn-primary btn followBtn" style="text-align: right" data-id="{$user.id}">{$user.follow}</button>
+            </section>
+        </div>
+        <div class="text-align" style="height:100px">
+            <p>关注：{$user.followings} &nbsp; /  &nbsp; 粉丝：{$user.followers}&nbsp; /  &nbsp; 作品数量：{$user.workNum}</p>
+            <p>{$user.description}</p>
+        </div>
+    </section>
+</section>
+{/volist}
+</div>
+<div class="clear"></div>

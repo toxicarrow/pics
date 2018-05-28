@@ -1,0 +1,37 @@
+{include file="index@index/header"/}
+<div style="margin-top:2.5em">
+    <div style="background-color: white">
+        <section id="eventMain" style="width:70%;margin-left:15%">
+            <header class="well flex">
+                <h2 class="pageTitle" style="font-size: 35px">活动</h2>
+                <div class="navbar navbar-default"style="margin-top: 20px;margin-left:10px">
+                        <div role="navigation" aria-expanded="false">
+                            <ul class="nav navbar-nav">
+                                <li class="active"><a href="/activeEvent">进行中</a></li>
+                                <li><a href="/endEvent">已结束</a></li>
+                            </ul>
+                        </div>
+                </div>
+            </header>
+            {volist name="allEvent" id="event"}
+            <main style="margin-left:20px">
+                <div class="flex" style="border-bottom: solid;border-width: 1px;border-color: #a8a8a8;padding-bottom:10px;padding-top:10px">
+                    <a href="/eventDetail/event/{$event.id}"><img src="{$event.eventPost}" style="width:750px;height:100%"></a>
+                    <div style="margin-left:3%;margin-top: 20px;text-align: center">
+                    <a href="/eventDetail/event/{$event.id}"><h3>{$event.name}</h3></a>
+                        <p style="margin-top: 20px;">
+                        开始日期：{$event.startDate}</br></br>
+                        预计结束日期：{$event.endDate}</br></br>
+                            简介：{$event.description}
+                        </p>
+                        <button style="margin-top:10px" class="btn btn-info btn-lg" onclick="window.location='/eventDetail/event/{$event.id}'">
+                            查看详情
+                        </button>
+                    </div>
+                </div>
+            </main>
+            {/volist}
+            <footer style="height:200px"></footer>
+        </section>
+    </div>
+</div>

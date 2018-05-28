@@ -1,0 +1,70 @@
+{include file="index@index/header"/}
+{volist name="event" id="vo"}
+<img src="{$vo.eventPost}" style="width:100%">
+<div class="row" style="margin-top:15px;height:250px">
+    <section class="col-md-8 col-sm-6 col-xs-5;" style="background-color: white;height:250px;margin-left: 5%">
+        <header style="padding-top: 20px;padding-left: 15px;height: 50px">
+            <p class="pageTitle" style="font-size: 30px">介绍</p>
+        </header>
+        <main style="padding-left: 15px;">
+            <p style="margin-top:50px">{$vo.description}</p>
+        </main>
+    </section>
+    <section class="col-md-3 col-sm-5 col-xs-6" style="margin-left:10px;background-color: white;height:250px;text-align: center">
+        <header style="padding-top: 20px;padding-left: 15px;height: 50px">
+            <h2>{$vo.name}</h2>
+            </br>
+            <p>开始日期：{$vo.startDate}</br></p>
+            <p>结束日期：{$vo.endDate}</br></p>
+            <p>作品数量：{$vo.pictureNum}</br></p>
+            <button class="btn btn-primary btn-large" style="letter-spacing: 10px;margin-top:20px" disabled="true">活动已结束</button>
+        </header>
+    </section>
+</div>
+{/volist}
+
+<section style="width: 94%;margin-left: 4%;background-color: white;margin-top:15px">
+    {volist name="winners" id="win"}
+    <section style="width:75%; margin-left:10%;text-align: center;margin-bottom: 15px;margin-top: 15px;border-bottom: solid;border-width: 1px;border-color: #a8a8a8;">
+        <header>
+            <h1 class="pageTitle" style="font-size: 37px">第{$win.prize}名</h1>
+            <a href="/user/{$win.authorId}">
+                <img src="{$win.profilePhoto}" style="height:50px;width: 50px;border-radius: 50%"><strong>&nbsp;&nbsp;{$win.userName}</strong>
+            </a>
+        </header>
+        <main>
+            <img src="{$win.path}" style="width:90%;margin-top:15px">
+        </main>
+    </section>
+    {/volist}
+</section>
+
+<section id="allPicture" style="width: 94%;margin-left: 4%;background-color: white;margin-top:15px;padding-left: 15px;">
+    <header style="padding-top: 20px;height: 80px">
+        <p class="pageTitle" style="font-size: 40px">所有作品</p>
+    </header>
+    <main class="justified-gallery" >
+        {volist name="pictures" id="picture"}
+        <a href="{$picture.path}" rel="allPictures" data-lightbox="allPictures">
+            <img src="{$picture.thumbPath}" alt="{$picture.title}"/>
+            <div class="caption" style="text-align: right">
+                <strong style="margin-right: 20px">{$picture.title}</strong>
+                    <span class="glyphicon {$picture.likeStyle}" style="font-size: 20px"></span>&nbsp;
+                    <strong>{$picture.thumbUp}</strong>
+            </div>
+        </a>
+        {/volist}
+    </main>
+    <footer style="height:200px">
+
+    </footer>
+</section>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script src="__JS__/lightbox.js"></script>
+<script>
+    $(".justified-gallery").justifiedGallery({
+        rowHeight : 200,
+        margins : 3,
+
+    });
+</script>

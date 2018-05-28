@@ -1,121 +1,24 @@
 {include file="index/header"/}
-<!--<div class="bg"></div>
-<!--<img src="__img__/main.jpg" class="img-responsive" >-->
-<!--
-<div class="container main">
-    <div class="row">
-
-            <div class="navbar navbar-default">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-offset-3"  role="navigation" id="filter-navbar-collapse" aria-expanded="false">
-                            <ul class="nav navbar-nav">
-                                <li><a href="#">风景</a></li>
-                                <li><a href="#">纪实</a></li>
-                                <li><a href="#">人物</a></li>
-                                <li><a href="#">商品</a></li>
-                                <li><a href="#">生态</a></li>
-                                <li><a href="#">概念</a></li>
-                                <li><a href="#">艺术</a></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-    </div>
+<div style="background-image:url(http://www.igallery.com/static/img/bg.jpg);height:800px;background-size: cover">
+    <div></div>
+    <p style="margin-top:250px;display: inline-block">
+    <h1 style="color: white;text-align:center;font-size: 60px;letter-spacing: 10px">IGallery</h1>
+    <p style="text-align:center;font-size: 45px;color: white;">———摄影人生</p>
+    </p>
 </div>
-<div id="nothing"></div>
--->
-<div class="container" style="margin-top: 3em">
+<div class="container" style="margin-top: 1em">
     <div id="myGallery" class="justified-gallery" >
         {volist name="list" id="picture" }
-        <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}" title="{$picture.title}">
+        <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}.html" target="_blank" title="{$picture.title}">
             <img src="{$picture.thumbPath}" height="{$picture.thumbHeight}" width="{$picture.thumbWidth}"/>
+            <!--<div class="caption">-->
+                <!--<button  class="btn btn-primary" id="test">点击</button>-->
+            <!--</div>-->
         </a>
         {/volist}
-        <!-- other images... -->
     </div>
-    <!--<div id="myGallery" class="justified-gallery" >
-            <a href="__img__/01.jpg">
-                <img alt="Title 1" src="__img__/01.jpg"/>
-                <div class="caption">
-                    <h4>Title 1</h4>
-                    <span>ok</span>
-                </div>
-            </a>
-            <a href="__img__/02.jpg">
-                <img alt="Title 2" src="__img__/02.jpg"/>
-            </a>
-            <a href="__img__/03.jpg">
-                <img alt="Title 3" src="__img__/03.jpg"/>
-            </a>
-            <a href="__img__/04.jpg">
-                <img alt="Title 4" src="__img__/04.jpg"/>
-            </a>
-            <a href="__img__/05.jpg">
-                <img alt="Title 5" src="__img__/05.jpg"/>
-            </a>
-            <a href="__img__/06.jpg">
-                <img alt="Title 6" src="__img__/06.jpg"/>
-            </a>
-            <a href="__img__/07.jpg">
-                <img alt="Title 7" src="__img__/07.jpg"/>
-            </a>
-            <a href="__img__/08.jpg">
-                <img alt="Title 8" src="__img__/08.jpg"/>
-            </a>
-            <a href="__img__/10.jpg">
-                <img alt="Title 10" src="__img__/10.jpg"/>
-            </a>
-            <a href="__img__/11.jpg">
-                <img alt="Title 11" src="__img__/11.jpg"/>
-            </a>
-            <a href="__img__/12.jpg">
-                <img alt="Title 12" src="__img__/12.jpg"/>
-            </a>
-            <a href="__img__/13.jpg">
-                <img alt="Title 13" src="__img__/13.jpg"/>
-            </a>
-            <a href="__img__/14.jpg">
-                <img alt="Title 14" src="__img__/14.jpg"/>
-            </a>
-            <a href="__img__/15.jpg">
-                <img alt="Title 15" src="__img__/15.jpg"/>
-            </a>
-        </div>-->
 </div>
 
-<!--<div class="modal fade text-center" id="articleDetail"  tabindex="-1" role="dialog" >
-    <div class="modal-dialog modal-lg" style="display: inline-block;width: 1200px;">
-        <div class="modal-content" style="background-color: rgba(255,255,255,0.8)">
-            <div class="modal-header" style="position: relative">
-                <button class="btn btn-primary btn-sm" data-dismiss="modal" style="position: absolute;right:5px;top:5px"><span class="glyphicon glyphicon-remove" ></span></button>
-            </div>
-            <div class="modal-body" >
-                <div class="row">
-                    <div class="col-md-9" style="position: relative">
-                        <img id="articlePicture" src="">
-                        <a id="left-side" href="#" class="sideBar leftSide">
-                            <div style="height:40%"></div>
-                            <span class="glyphicon glyphicon-chevron-left" style="font-size: 40px;"></span>
-                        </a>
-                        <a id="right-side" href="#" class="sideBar rightSide">
-                            <div style="height:40%"></div>
-                            <span class="glyphicon glyphicon-chevron-right" style="font-size: 40px;"></span>
-                        </a>
-                    </div>
-                    <div class="col-md-3">
-                        <h2 style="color:black">评论</h2>
-
-
-                    </div>
-            </div>
-            </div>
-        </div>
-    </div>
-</div>-->
 
 
 <script src="__JS__/jquery.justifiedGallery.min.js"></script>
@@ -126,7 +29,9 @@
         margins : 3,
         waitThumbnailsLoad : false
     });
-
+//    $('#test').click(function (e) {
+//        e.preventDefault();
+//    });
 //    $(document).ready(function () {
 //        $("#myGallery>a").click(function (e) {
 //            e.preventDefault();

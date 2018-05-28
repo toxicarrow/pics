@@ -30,4 +30,19 @@ class CategoryService
         }
         return $result;
     }
+    public static function getAllCategoryWork($category){
+        $works=Db::table('work')
+            ->where('category',$category)
+            ->select();
+        $result=array();
+        foreach ($works as $work){
+            $pictures=Db::table('work_picture')
+                ->where('articleId',$work['id'])
+                ->select();
+            foreach ($pictures as $picture){
+                $result[]=$picture;
+            }
+        }
+        return $result;
+    }
 }

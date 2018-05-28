@@ -1,0 +1,87 @@
+{include file="public/head"}
+<body>
+<div class="x-body">
+    <button class="layui-btn layui-btn-small "
+            onclick="x_admin_show('添加话题','showAddTopic.html',500,300)"></i>添加话题</button>
+    <button onclick="javascript:location.reload()" class="layui-btn layui-btn-small">刷新</button>
+    <span class="x-right" style="line-height:40px">共有数据:<i class="i_count">{$topics->total()}</i>条</span>
+
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>话题名称</th>
+            <th>创建时间</th>
+            <th>作品数量</th>
+            <th>操作</th>
+        </thead>
+        <tbody>
+
+        {volist name="topics" id="vo"}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.topicName}</td>
+            <td>{$vo.date}</td>
+            <td>{$vo.workNum}</td>
+            <td>
+                <button onclick="delTopic(this,{$vo.id})" class="layui-btn layui-btn-mini layui-btn-danger">删除</button>
+            </td>
+        </tr>
+        {/volist}
+
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$topics->render()}
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    layui.use(['laydate','form'], function(){
+        var laydate = layui.laydate;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#start' //指定元素
+        });
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#end' //指定元素
+        });
+    });
+
+
+    function delTopic(obj,id){
+        var count = $(".i_count")[0].innerText;
+        layer.confirm('确认要删除吗？',function(index){
+            //捉到所有被选中的，发异步进行删除
+            $.post("/deleteTopic", {id: id}, function(data, textStatus, xhr) {
+                /*optional stuff to do after success */
+                console.log(data);
+                if(data.code==1){
+                    layer.msg(data.msg,{icon:1,time:1000},function(){
+                        $(obj).parents('tr').remove();
+                        $(".i_count").html(count-1);
+                    });
+                }else{
+                    layer.msg(data.msg,{icon:2,time:1000});
+                }
+
+            });
+        });
+    }
+
+
+
+</script>
+
+<script>var _hmt = _hmt || []; (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+{include file="public/foot"}

@@ -1,0 +1,29 @@
+{include file="index@index/header"/}
+<header id="header" style="margin-top:3.5em;height:100px;background-color: white">
+    <div class="flex" style="margin-top:10px;padding-left: 20px">
+        <h2 class="pageTitle">{$tagName}</h2>
+        <p style="margin-top: 30px;margin-left: 50px;color:#c99a05;letter-spacing:5px">{$workNum}组作品</p>
+    </div>
+</header>
+<section id="pictureMain" style="width:90%;margin-left:5%">
+    <div id="tagGallery" class="justified-gallery" >
+        {volist name="tagPictures" id="picture" }
+        <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}" target="_blank" rel="pet">
+            <img src="{$picture.thumbPath}" alt="{$picture.title}" height='{$picture.thumbHeight}' width="{$picture.thumbWidth}"/>
+        </a>
+        {/volist}
+    </div>
+</section>
+<script src="__JS__/jquery.justifiedGallery.min.js"></script>
+<script>
+    $(".justified-gallery").justifiedGallery({
+        rowHeight : 200,
+        margins : 3,
+        waitThumbnailsLoad : false
+    });
+    $(function () {
+            if($('#tagGallery').children().length==0){
+                $(this).html("<p style=\"text-align: center;font-size: 1em\">暂时没有摄影作品：（</p>");
+            }
+    });
+</script>
