@@ -1,37 +1,56 @@
  {volist name="followingWorks" id="work"}
-            <section class="workMain" style="border: solid;border-width: 1px;border-color: #DCDCDC;background-color: white;margin: 10px;border-radius: 20px">
-                <header style="padding-left: 5%;padding-top: 10px;display: -webkit-flex;display: flex;">
-                    <a href="/user/{$work.authorId}">
-                        <img src="{$work.profilePhoto}" style="width:50px;height: 50px;border-radius: 50%">
-                    </a>
-                    <p style="margin:10px;font-size: 17px"><a href="/user/{$work.authorId}">{$work.name}</a></p>
-                </header>
-                <p style="text-align: center;font-size: 23px"><strong>{$work.title}</strong></p>
-                <main style="text-align: center">
+            <section class="workMain" style="border: solid;border-width: 1px;border-color: #DCDCDC;background-color: white;margin: 10px;">
+                <!--<header style="padding-left: 5%;padding-top: 20px;display: -webkit-flex;display: flex;">-->
+                    <!--<a href="/user/{$work.authorId}">-->
+                        <!--<img src="{$work.profilePhoto}" style="width:50px;height: 50px;border-radius: 50%">-->
+                    <!--</a>-->
+                    <!--<p style="margin:10px;font-size: 17px"><a href="/user/{$work.authorId}">{$work.name}</a></p>-->
+                    <!--<p style="text-align: center;margin-left:180px;font-size: 25px"><strong>{$work.title}</strong></p>-->
+                <!--</header>-->
+                <!--<p style="text-align: center;font-size: 25px"><strong>{$work.title}</strong></p>-->
+                <section class="justified-gallery" style="">
                     {volist name="work['pictures']" id="picture"}
-                        <img src="{$picture.path}" alt="{$picture.title}" style="margin: 10px;width: 80%;">
+                    <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}" target="_blank" rel="{$picture.articleId}">
+                        <img src="{$picture.thumbPath}" alt="{$picture.title}" height='{$picture.thumbHeight}' width="{$picture.thumbWidth}"/>
+                    </a>
                     {/volist}
-                </main>
-                <footer style="padding: 10px;margin-right:10px;display: -webkit-flex;display: flex;-webkit-justify-content: flex-end;justify-content: flex-end;">
-                    <div class="input-group" style="margin-right: 50px;width: 400px">
+                </section>
+                <section  style="padding-left: 10%;padding-top: 10px;display: -webkit-flex;display: flex;">
+                    <a href="/user/{$work.authorId}">
+                        <img src="{$work.profilePhoto}" style="width:35px;height: 35px;border-radius: 50%">
+                    </a>
+                    <p style="margin:10px;font-size: 12px"><a href="/user/{$work.authorId}">{$work.name}</a></p>
+                    <p style="padding:10px;margin-right: 20px;font-size: 12px"><time datetime="{$work.date}">{$work.date} </time></p>
+                </section>
+
+                <p style="padding-left: 10%;font-size: 13px;margin-top:5px;margin-bottom: 10px;line-height:25px;"><strong>简介：</strong>{$work.description}</p>
+                <footer style="padding-left: 10%;padding-top: 10px;display: -webkit-flex;display: flex;margin-bottom: 20px">
+
+                    <div class="input-group" style="width: 350px">
                         <input class="form-control" type="text" id="comment{$work.id}"placeholder="说点什么吧！">
                         <span class="input-group-btn">
                             <button class="btn btn-default sendComment" type="button" data-id="{$work.id}" >发送</button>
                         </span>
                     </div>
-                    <div class="btn-group">
-                    <button type="button" class="btn btn-default like">
-                        <span data-id="{$work.id}" class="glyphicon {$work.likeStyle}"></span>
+                    <div class="btn-group" style="margin-left: 50px">
+                    <button type="button" class="btn btn-default like" style="font-size: 10px">
+                        <span  data-id="{$work.id}" class="glyphicon {$work.likeStyle}"></span>
                         <strong>{$work.thumbUp}</strong>
                     </button>
-                    <button type="button" class="btn btn-default" onclick="location='/workDetail/id/{$work.id}'"><span class="glyphicon glyphicon-comment"></span>&nbsp;
+                    <button type="button" class="btn btn-default" style="font-size: 10px" onclick="location='/workDetail/id/{$work.id}'"><span class="glyphicon glyphicon-comment"></span>&nbsp;
                         {$work.commentNum}</button>
                     </div>
                 </footer>
-                <p style="text-align: right;padding:10px;margin-right: 20px"><time datetime="{$work.date}">{$work.date} </time></p>
+
             </section>
  {/volist}
+ <script src="__JS__/jquery.justifiedGallery.min.js"></script>
  <script>
+     $(".justified-gallery").justifiedGallery({
+         rowHeight : 200,
+         margins : 5,
+         waitThumbnailsLoad : false
+     });
      $('.like').click(function () {
          var id=$.cookie('id');
          if(id==null){

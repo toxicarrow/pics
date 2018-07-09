@@ -6,8 +6,13 @@
     <p style="text-align:center;font-size: 45px;color: white;">———摄影人生</p>
     </p>
 </div>
-<div class="container" style="margin-top: 1em">
-    <div id="myGallery" class="justified-gallery" >
+<div style="width: 80%;margin-left: 10%;text-align: center;margin-top: 50px" >
+
+    <h3 style="margin-bottom: 30px">已经有上万的摄影爱好者入驻了IGallery······</h3>
+    <p style="margin-bottom: 50px">在这里，发现基于共同兴趣的同好；鼓励原创和分享精神；除了美好的摄影和技能，我们更在意影像背后价值观的认同。</p>
+</div>
+<div class="container" style="width: 86%" style="margin-top: 1em">
+    <div id="myGallery"  class="justified-gallery" >
         {volist name="list" id="picture" }
         <a href="http://www.igallery.com/workDetail/id/{$picture.articleId}.html" target="_blank" title="{$picture.title}">
             <img src="{$picture.thumbPath}" height="{$picture.thumbHeight}" width="{$picture.thumbWidth}"/>
@@ -26,7 +31,7 @@
     $("#myGallery").justifiedGallery({
         rowHeight : 200,
         lastRow : 'nojustify',
-        margins : 3,
+        margins : 5,
         waitThumbnailsLoad : false
     });
 //    $('#test').click(function (e) {

@@ -6,9 +6,9 @@
             <button class="btn btn-default" id="searchBtn" type="button"><span class="glyphicon glyphicon-search"></span></button>
         </span>
     </div>
-    <section id="userResult" class="panel panel-info" style="width: 90%;margin-left: 5%">
+    <section id="userResult" class="panel panel-default" style="width: 90%;margin-left: 5%">
         <header class="panel-heading">
-            <h1 class="panel-title" style="font-size: 1.5em">搜索到的用户</h1>
+            <h2 class="panel-title" style="font-size: 18px">搜索到的用户</h2>
         </header>
         <main class="panel-body">
             <div style="margin-top: 10px;font-family: Georgia" id="following">
@@ -45,9 +45,9 @@
         <footer style="height:50px;"></footer>
     </section>
 
-    <section id="workResult" class="panel panel-info" style="width: 90%;margin-left: 5%;margin-top:20px">
+    <section id="workResult" class="panel panel-default" style="width: 90%;margin-left: 5%;margin-top:20px">
         <header class="panel-heading">
-            <h1 class="panel-title" style="font-size: 1.5em">搜索到的作品</h1>
+            <h2 class="panel-title" style="font-size:  18px">搜索到的作品</h2>
         </header>
         <main class="panel-body">
             <div style="margin-top: 10px;font-family: Georgia" id="works">
@@ -95,7 +95,7 @@
 
         $("#workGallery").justifiedGallery({
             rowHeight : 200,
-            margins : 3,
+            margins : 5,
         });
         $(function () {
             if($('#workGallery').children().length==0){

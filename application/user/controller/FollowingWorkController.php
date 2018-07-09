@@ -80,7 +80,9 @@ class FollowingWorkController extends Controller
                 ->select();
             $work['pictures']=$pictures;
             $date=date_create($work['date']);
-            $work['date']=date_format($date,'Y-m-d');
+
+            $work['date']=date_format($date,'m月d日');
+
             $followingWorks[]=$work;
         }
         return $followingWorks;

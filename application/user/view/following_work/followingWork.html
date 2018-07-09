@@ -1,14 +1,14 @@
 {include file="index@index/header"/}
 <div class="bodyMain">
     <div style="width: 90%;margin-left:5%" id="scrollMain">
-        <div class="row">
-            <section class="col-md-8 col-sm-12" id="workPlace">
+        <div class="row" style="padding-top: 20px">
+            <section class="col-md-5 col-md-offset-2 col-sm-12" id="workPlace">
            {include file="following_work/workBody"/}
             </section>
-            <aside class="col-md-3 col-sm-12" style="text-align: center;margin-left: 10px;margin-top:20px">
-                <section class="follow-section" style="width: 300px;background-color: white;">
+            <aside class="col-md-2 col-sm-12" style="text-align: center;margin-left: 10px;margin-top:20px">
+                <section class="follow-section" style="width: 230px;background-color: white;">
                     <div style="width: 100%;height:100px;background-image: url({$bgImg})"></div>
-                    <section class="follow-body" style="padding-left: 20px">
+                    <section class="follow-body" style="padding-left: 10px">
                         <div class="row" style="display: -webkit-flex;display: flex;-webkit-justify-content: center;justify-content: center;height:90px">
                             <a href="/user/{$userId}">
                                 <img src="{$profilePhoto}" style="width:60px;height:60px;border-radius: 50%;margin-top: 10px"/>
@@ -17,7 +17,7 @@
                                 <strong>{$name}</strong>
                             </a>
                         </div>
-                        <div style="height:100px">
+                        <div style="height:70px">
                             <div style="display: -webkit-flex;display: flex;-webkit-justify-content: space-around;justify-content: space-around">
                                 <p>关注</br>{$following}</p>
                                 <p>粉丝</br>{$follower}</p>
